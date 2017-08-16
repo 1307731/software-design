@@ -53,7 +53,7 @@ before_script:
 
 script:
    #- ./gradlew build connectedCheck
-   - ./gradlew clean build connectedAndroidTest -PdisablePreDex --stacktrace
+   - ./gradlew build connectedCheck -PdisablePreDex --stacktrace
 
 licenses:
     - 'android-sdk-preview-license-.+'
