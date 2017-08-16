@@ -29,3 +29,9 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
+
+// This enables long timeouts required on slow environments, e.g. Travis
+adbOptions {
+    timeOutInMs 20 * 60 * 1000  // 20 minutes
+    installOptions "-d","-t"
+}
