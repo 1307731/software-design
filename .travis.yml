@@ -52,7 +52,8 @@ before_script:
     - adb shell input keyevent 82 &
 
 script:
-   - ./gradlew build connectedCheck
+   #- ./gradlew build connectedCheck
+   - ./gradlew clean build connectedAndroidTest -PdisablePreDex --stacktrace
 
 licenses:
     - 'android-sdk-preview-license-.+'
