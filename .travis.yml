@@ -3,9 +3,9 @@ sudo: false
 
 env:
   global:
-    - ANDROID_API_LEVEL=26
+    - ANDROID_API_LEVEL=25
     - ANDROID_TEST_LEVEL=25
-    - ANDROID_BUILD_TOOLS_VERSION=26.0.0
+    - ANDROID_BUILD_TOOLS_VERSION=25.0.2
     - ANDROID_ABI=armeabi-v7a
     - ANDROID_TAG=google_apis
 
@@ -35,6 +35,7 @@ android:
     #- sys-img-armeabi-v7a-android-26
     #- sys-img-armeabi-v7a-android-25
     #- sys-img-armeabi-v7a-android-23
+    - sys-img-armeabi-v7a-android-ANDROID_API_LEVEL
     - sys-img-armeabi-v7a-android-ANDROID_TEST_LEVEL
 
 before_install:
@@ -48,6 +49,9 @@ before_script:
     - emulator -avd test -no-skin -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
+
+script:
+   - ./gradlew build connectedCheck
 
 licenses:
     - 'android-sdk-preview-license-.+'
