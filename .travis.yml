@@ -3,6 +3,8 @@ sudo: false
 
 dist: precise
 
+jdk: oraclejdk8
+
 env:
   global:
     - ANDROID_API_LEVEL=25
