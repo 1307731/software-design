@@ -10,11 +10,12 @@
         android:id="@+id/button_login"
         android:layout_width="154dp"
         android:layout_height="39dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="onLoginClick"
         android:text="Login"
         tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="213dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        tools:layout_editor_absoluteY="213dp" />
 
     <EditText
         android:id="@+id/editText_Username_Login"

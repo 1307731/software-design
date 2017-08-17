@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.luca.realestateapp.SignUpActivity">
+    tools:context="com.software.design.realestateapp.SignUpActivity">
 
     <Button
         android:id="@+id/button_SignUpSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:onClick="signUpUser"
         android:text="Sign Up"
         tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="349dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        tools:layout_editor_absoluteY="349dp" />
 
     <EditText
         android:id="@+id/editText_Name"
@@ -45,7 +46,7 @@
         android:ems="10"
         android:hint="Email Address"
         android:inputType="textPersonName"
-        android:layout_below="@+id/editText13"
+        android:layout_below="@+id/editText_Username"
         android:layout_alignParentStart="true"
         android:layout_marginTop="13dp" />
 
@@ -75,24 +76,24 @@
         android:id="@+id/editText_ConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText_Password"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Confirm Password"
-        android:inputType="textPassword|number"
-        android:layout_below="@+id/editText_Password"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:inputType="textPassword" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBox_Agent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Realestate Agent"
-        android:layout_below="@+id/editText_ConfirmPassword"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp" />
+        android:layout_below="@+id/editText_ConfirmPassword"
+        android:layout_marginTop="24dp"
+        android:text="Realestate Agent" />
 
     <EditText
-        android:id="@+id/editText13"
+        android:id="@+id/editText_Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
