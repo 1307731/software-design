@@ -8,20 +8,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
     //initialize variables
     Button signUp;
     Button login;
@@ -31,14 +28,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_log_in);
         //assign the signup button to the variable and initialize a listener for a click
         signUp = (Button)findViewById(R.id.button_signup);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //create intent to switch to signup activity
-                Intent changeToSignUp = new Intent(MainActivity.this, SignUpActivity.class);
+                Intent changeToSignUp = new Intent(LogInActivity.this, SignUpActivity.class);
                 startActivity(changeToSignUp);
             }
         });
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(LogInActivity.this,response,Toast.LENGTH_LONG).show();
                         int result = processJSON(response);
 
                         if(result==1){
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogInActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
