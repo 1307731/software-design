@@ -1,7 +1,7 @@
 language: android
 sudo: false
 
-dist: precise
+#dist: precise
 
 jdk: oraclejdk8
 
