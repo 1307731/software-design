@@ -1,4 +1,4 @@
-package com.example.luca.realestateapp;
+package com.software.design.realestateapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.luca.realestateapp", appContext.getPackageName());
+        assertEquals("com.software.design.realestateapp", appContext.getPackageName());
     }
 }

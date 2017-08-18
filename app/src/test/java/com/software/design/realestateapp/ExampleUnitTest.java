@@ -1,4 +1,4 @@
-package com.example.luca.realestateapp;
+package com.software.design.realestateapp;
 
 import org.junit.Test;
 
