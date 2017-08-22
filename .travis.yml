@@ -62,9 +62,12 @@ before_script:
     - adb shell input keyevent 82 &
 
 script:
-    - ./gradlew build test connectedCheck pitest coveralls
+    - ./gradlew build test connectedCheck
     #- ./gradlew build connectedCheck -PdisablePreDex --stacktrace
     #-./gradlew build testDebug
+
+after_success:
+- ./gradlew pitest coveralls
 
 licenses:
     - 'android-sdk-preview-license-.+'
