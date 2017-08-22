@@ -67,7 +67,7 @@ script:
     #-./gradlew build testDebug
 
 after_success:
-- ./gradlew pitest coveralls
+- ./gradlew cobertura coveralls
 
 licenses:
     - 'android-sdk-preview-license-.+'
