@@ -10,13 +10,15 @@
         android:id="@+id/button_SignUpSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:onClick="signUpUser"
         android:text="Sign Up"
         tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="349dp" />
+        tools:layout_editor_absoluteY="349dp"
+        tools:textColor="@android:color/holo_orange_dark"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/editText_Name"
@@ -26,51 +28,56 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="Name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        tools:textColor="@android:color/holo_orange_dark" />
 
     <EditText
         android:id="@+id/editText_Surname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText_Name"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Surname"
         android:inputType="textPersonName"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/editText_Name"
-        android:layout_alignParentStart="true" />
+        tools:textColor="@android:color/holo_orange_dark" />
 
     <EditText
         android:id="@+id/editText_EmailAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText_Username"
+        android:layout_marginTop="13dp"
         android:ems="10"
         android:hint="Email Address"
         android:inputType="textPersonName"
-        android:layout_below="@+id/editText_Username"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="13dp" />
+        tools:textColor="@android:color/holo_orange_dark" />
 
     <EditText
         android:id="@+id/editText_PhoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText_EmailAddress"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Phone Number"
         android:inputType="number"
-        android:layout_below="@+id/editText_EmailAddress"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="12dp" />
+        tools:textColor="@android:color/holo_orange_dark" />
 
     <EditText
         android:id="@+id/editText_Password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText_PhoneNumber"
+        android:layout_marginTop="13dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_below="@+id/editText_PhoneNumber"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="13dp" />
+        tools:textColor="@android:color/holo_orange_dark" />
 
     <EditText
         android:id="@+id/editText_ConfirmPassword"
@@ -81,7 +88,8 @@
         android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Confirm Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        tools:textColor="@android:color/holo_orange_dark" />
 
     <CheckBox
         android:id="@+id/checkBox_Agent"
@@ -90,17 +98,19 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/editText_ConfirmPassword"
         android:layout_marginTop="24dp"
-        android:text="Realestate Agent" />
+        android:text="Realestate Agent"
+        tools:textColor="@android:color/holo_orange_dark" />
 
     <EditText
         android:id="@+id/editText_Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText_Surname"
         android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
-        android:layout_below="@+id/editText_Surname"
-        android:layout_alignParentStart="true" />
+        tools:textColor="@android:color/holo_orange_dark" />
 
 </android.widget.RelativeLayout>
