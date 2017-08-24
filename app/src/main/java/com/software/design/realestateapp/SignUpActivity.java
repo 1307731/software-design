@@ -1,5 +1,8 @@
 package com.software.design.realestateapp;
 
+import android.app.ActionBar;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +33,10 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        //Change action bar - move this to styles next sprint
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFA500")));
         //assign screen element variables to fields
         name = (EditText)findViewById(R.id.editText_Name);
         surname = (EditText)findViewById(R.id.editText_Surname);
@@ -61,6 +68,10 @@ public class SignUpActivity extends AppCompatActivity {
         }else{
             agentData = "R";
         }
+
+        //Error validation
+
+
         //if passwords match send data for query
         if(passwordData.equals(confirmPasswordData)){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

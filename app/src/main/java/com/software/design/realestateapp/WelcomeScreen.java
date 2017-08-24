@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 
 public class WelcomeScreen extends Activity {
+    private boolean start=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +18,10 @@ public class WelcomeScreen extends Activity {
 
             @Override
             public void run() {
-                Intent logIn = new Intent(WelcomeScreen.this, LogInActivity.class);
-                startActivity(logIn);
+                if(start == false)
+                {
+                    closeScreen();
+                }
             }
 
         }, 10000);
@@ -28,7 +31,14 @@ public class WelcomeScreen extends Activity {
 
     public void clickImage(View view)
     {
+        closeScreen();
+    }
+
+    public void closeScreen()
+    {
+        start=true;
         Intent logIn = new Intent(this, LogInActivity.class);
         startActivity(logIn);
+        finish();
     }
 }

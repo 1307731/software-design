@@ -1,6 +1,8 @@
 package com.software.design.realestateapp;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +33,9 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         //assign the signup button to the variable and initialize a listener for a click
         signUp = (Button)findViewById(R.id.button_signup);
+        //Change action bar - move this to styles next sprint
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFA500")));
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
