@@ -109,6 +109,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
+
 //    public void loginClick(View v) {
 //        ArrayList<String[]> list = new ArrayList<>();
 //        String user = username.getText().toString();
