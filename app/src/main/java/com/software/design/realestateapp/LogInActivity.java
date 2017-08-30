@@ -54,7 +54,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     //method that returns values based on the servers response
-    public int processJSON(String json) {
+    public static int processJSON(String json) {
         System.out.println(json);
         if (json.contains("1")) {
             return 1;
