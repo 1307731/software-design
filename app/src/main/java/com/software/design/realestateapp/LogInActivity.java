@@ -1,5 +1,6 @@
 package com.software.design.realestateapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -42,6 +43,8 @@ public class LogInActivity extends AppCompatActivity {
                 //create intent to switch to signup activity
                 Intent changeToSignUp = new Intent(LogInActivity.this, SignUpActivity.class);
                 startActivity(changeToSignUp);
+
+
             }
         });
 
@@ -77,6 +80,12 @@ public class LogInActivity extends AppCompatActivity {
                         if(result==1){
                             System.out.println("result is: " + result);
                             Toast.makeText(getApplicationContext(),"Existing found", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
+                            intent.putExtra("Username", usernameData);
+                            startActivity(intent);
+
+                            finish();
+
                         }else{
                             Toast.makeText(getApplicationContext(),"No user found", Toast.LENGTH_LONG).show();
                         }

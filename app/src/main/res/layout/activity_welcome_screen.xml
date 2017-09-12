@@ -13,8 +13,9 @@
             android:layout_height="match_parent"
             android:background="@android:color/black"
             android:src="@drawable/valuation"
-            android:onClick="clickImage"
             tools:layout_editor_absoluteX="-15dp"
             tools:layout_editor_absoluteY="-5dp" />
+
+
 
 </android.widget.RelativeLayout>

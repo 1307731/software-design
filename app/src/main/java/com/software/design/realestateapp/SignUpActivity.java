@@ -80,6 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
 
+
                     }
                 },
                 new Response.ErrorListener() {
