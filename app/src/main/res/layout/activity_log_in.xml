@@ -4,62 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.luca.realestateapp.MainActivity">
+    android:padding="15dp"
+    tools:context="com.software.design.realestateapp.LogInActivity">
 
     <Button
         android:id="@+id/button_login"
-        android:layout_width="154dp"
-        android:layout_height="39dp"
-        android:layout_alignBottom="@+id/button_signup"
-        android:layout_marginStart="26dp"
-        android:layout_toEndOf="@+id/button_signup"
-        android:onClick="onLoginClick"
-        android:text="Login"
-        android:textColor="@android:color/holo_orange_dark"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="213dp" />
-
-    <EditText
-        android:id="@+id/editText_Username_Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/editText_Password_Login"
-        android:layout_marginRight="67dp"
-        android:layout_marginTop="71dp"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/holo_orange_dark"
-        tools:layout_editor_absoluteX="83dp"
-        tools:layout_editor_absoluteY="66dp" />
-
-    <EditText
-        android:id="@+id/editText_Password_Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_Username_Login"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="67dp"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName|textPassword"
-        android:textColor="@android:color/holo_orange_dark"
-        tools:layout_editor_absoluteX="83dp"
-        tools:layout_editor_absoluteY="129dp" />
-
-    <Button
-        android:id="@+id/button_signup"
-        android:layout_width="154dp"
+        android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/editText_Password_Login"
-        android:layout_marginRight="67dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="141dp"
+        android:onClick="onLoginClick"
+        android:text="Login"
+        android:textColor="@android:color/holo_orange_dark"/>
+
+    <EditText
+        android:id="@+id/editText_Username_Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/holo_orange_dark"/>
+
+    <EditText
+        android:id="@+id/editText_Password_Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText_Username_Login"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPersonName|textPassword"
+        android:textColor="@android:color/holo_orange_dark"/>
+
+    <Button
+        android:id="@+id/button_signup"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:text="Sign Up"
         android:textColor="@android:color/holo_orange_dark"
         tools:layout_editor_absoluteX="206dp"
-        tools:layout_editor_absoluteY="213dp" />
+        tools:layout_editor_absoluteY="213dp"
+        android:layout_alignParentEnd="true" />
 </android.widget.RelativeLayout>

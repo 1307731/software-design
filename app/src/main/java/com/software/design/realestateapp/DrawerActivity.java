@@ -3,6 +3,9 @@ package com.software.design.realestateapp;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.software.design.realestateapp.fragments.NewsFeed;
+import com.software.design.realestateapp.fragments.MyEvaluations;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,10 +58,17 @@ public class DrawerActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(),"Username: " + userName, Toast.LENGTH_LONG).show();
 
 
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        Fragment fragment = new NewsFeed();
+        ft.add(R.id.drawerContentFrame,fragment);
+        ft.commit();
 
         View header = navigationView.getHeaderView(0);
         TextView drawerUsername = (TextView)header.findViewById(R.id.drawerUsername);
         drawerUsername.setText(userName);
+
 
     }
 
@@ -97,9 +110,25 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment;
+
         if (id == R.id.nav_newsFeed) {
 
+            fragment = new NewsFeed();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.drawerContentFrame, fragment);
+            ft.commit();
+
+
         } else if (id == R.id.nav_myEvals) {
+
+            fragment = new MyEvaluations();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.drawerContentFrame, fragment);
+            ft.commit();
+
 
         }
 
