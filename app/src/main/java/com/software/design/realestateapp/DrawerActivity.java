@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.software.design.realestateapp.fragments.NearbyProperties;
 import com.software.design.realestateapp.fragments.NewsFeed;
 import com.software.design.realestateapp.fragments.MyEvaluations;
 
@@ -124,6 +125,15 @@ public class DrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_myEvals) {
 
             fragment = new MyEvaluations();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.drawerContentFrame, fragment);
+            ft.commit();
+
+
+        }else if (id == R.id.nav_map) {
+
+            fragment = new NearbyProperties();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.drawerContentFrame, fragment);
