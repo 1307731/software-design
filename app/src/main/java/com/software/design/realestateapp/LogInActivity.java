@@ -77,7 +77,7 @@ public class LogInActivity extends AppCompatActivity {
                         //Toast.makeText(LogInActivity.this,response,Toast.LENGTH_LONG).show();
                         int result = processJSON(response);
 
-                        if(result==1){
+                        if(result==0){
                             System.out.println("result is: " + result);
                             Toast.makeText(getApplicationContext(),"Existing found", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
