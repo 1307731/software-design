@@ -61,13 +61,14 @@ public class NearbyProperties extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //min sdk is 23
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            MapsInitializer.initialize(getContext());
-        }else{
-
-            Toast.makeText(this.getContext(),"SDK version less than 23",Toast.LENGTH_LONG);
-
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            MapsInitializer.initialize(getContext());
+//        }else{
+//
+//            Toast.makeText(this.getContext(),"SDK version less than 23",Toast.LENGTH_LONG);
+//
+//        }
+        MapsInitializer.initialize(getActivity().getApplicationContext());
 
         mGoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
