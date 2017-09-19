@@ -2,6 +2,36 @@
     <string name="app_name">RealEstateApp</string>
     <string name="title_activity_login">Sign in</string>
 
+    <!-- Strings related to evaluation form -->
+    <string name="address">Address:</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="number_of_floors">Number of Floors</string>
+    <string name="enter_floors">Enter Floors</string>
+    <string name="plot_area">Plot Area</string>
+    <string name="house_area">House Area</string>
+    <string name="enter_area">Enter Area in m^2</string>
+    <string name="rooms">Rooms</string>
+    <string name="add_room">Add Room</string>
+
+    <!-- Strings related to room activity -->
+    <string-array name="room_types">
+        <item>Bedroom</item>
+        <item>Bathroom</item>
+        <item>Kitchen</item>
+        <item>Dining Room</item>
+        <item>Lounge</item>
+        <item>Games Room</item>
+        <item>Study</item>
+        <item>Bar</item>
+    </string-array>
+    <string-array name="flooring_types">
+        <item>Tiles</item>
+        <item>Wood</item>
+        <item>Carpet</item>
+    </string-array>
+    <string name="room_type">Room Type</string>
+    <string name="flooring">Flooring</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
