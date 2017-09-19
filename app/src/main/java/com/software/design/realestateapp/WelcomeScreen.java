@@ -8,7 +8,7 @@ import android.view.View;
 
 public class WelcomeScreen extends Activity {
     private boolean start = false;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
