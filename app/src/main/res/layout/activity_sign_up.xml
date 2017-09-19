@@ -120,4 +120,13 @@
         android:inputType="textPersonName"
         tools:textColor="@android:color/holo_orange_dark" />
 
+    <TextView
+        android:id="@+id/textView_signUp_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_SignUpSend"
+        android:layout_alignParentEnd="true"
+        android:text="0"
+        android:visibility="visible" />
+
 </android.widget.RelativeLayout>
