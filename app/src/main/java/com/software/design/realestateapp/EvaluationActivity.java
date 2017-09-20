@@ -32,8 +32,8 @@ public class EvaluationActivity extends AppCompatActivity{
         //assign screen element variables to fields
         address = (EditText) findViewById(R.id.editText_address);
         floors = (EditText)findViewById(R.id.editText_floors);
-        plotArea = (EditText)findViewById(R.id.editText_Password);
-        houseArea = (EditText)findViewById(R.id.editText_ConfirmPassword);
+        plotArea = (EditText)findViewById(R.id.editText_plot);
+        houseArea = (EditText)findViewById(R.id.editText_houseArea);
         //php url
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertHouse.php";
 

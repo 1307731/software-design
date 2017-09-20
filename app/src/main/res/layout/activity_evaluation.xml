@@ -73,7 +73,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/enter_floors"
-                    android:inputType="textPersonName" />
+                    android:inputType="number" />
             </LinearLayout>
 
             <LinearLayout
