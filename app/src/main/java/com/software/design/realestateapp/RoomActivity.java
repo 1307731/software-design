@@ -1,20 +1,22 @@
 package com.software.design.realestateapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.software.design.realestateapp.fragments.MyEvaluations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoomActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    List<String> roomList = new ArrayList<String>();
-    List<String> flooringList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,16 @@ public class RoomActivity extends AppCompatActivity implements AdapterView.OnIte
         // Apply the adapter to the spinner
         spinner2.setAdapter(flooring_adapter);
         spinner2.setOnItemSelectedListener(this);
+
+        Button button1 = (Button) findViewById(R.id.finishRoomBtn);
+        button1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RoomActivity.this, EvaluationActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

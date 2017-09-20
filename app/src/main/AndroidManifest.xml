@@ -34,6 +34,7 @@
             android:label="@string/title_activity_drawer_activity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".RoomActivity"></activity>
+        <activity android:name=".EvaluationActivity"></activity>
         <!--Specifying the api key for the map view in the map fragment-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
