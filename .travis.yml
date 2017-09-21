@@ -46,6 +46,7 @@ android:
     #- sys-img-armeabi-v7a-android-$ANDROID_TEST_LEVEL
     - sys-img-armeabi-v7a-google_apis-$ANDROID_TEST_LEVEL
     
+
 before_install:
     #- sudo apt upgrade -y
     - chmod +x gradlew
@@ -59,6 +60,9 @@ before_script:
     - export QEMU_AUDIO_DRV=none && emulator -avd test -no-window &
     #- emulator -avd test -no-audio -no-window &
     - android-wait-for-emulator
+    - adb shell settings put global window_animation_scale 0.0
+    - adb shell settings put global transition_animation_scale 0.0
+    - adb shell settings put global animator_duration_scale 0.0
     - adb shell input keyevent 82 &
 
 script:
