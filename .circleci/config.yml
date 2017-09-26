@@ -27,6 +27,5 @@ jobs:
           path: app/build/test-results
       - run:
           name: Upload Test Results
-          command: cd app/build/test-results
-          command: bash <(curl -s https://codecov.io/bash)
+          command: cd app/build/test-results && bash <(curl -s https://codecov.io/bash)
 
