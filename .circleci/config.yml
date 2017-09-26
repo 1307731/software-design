@@ -26,7 +26,6 @@ jobs:
       - store_test_results:
           path: app/build/test-results
       - run:
-	  name: Upload Test Results
+          name: Upload Test Results
           command: bash <(curl -s https://codecov.io/bash)
-
 
