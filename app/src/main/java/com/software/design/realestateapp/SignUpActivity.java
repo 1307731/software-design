@@ -1,11 +1,9 @@
 package com.software.design.realestateapp;
 
-import android.app.ActionBar;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,12 +39,19 @@ public class SignUpActivity extends AppCompatActivity {
         4 - Not all fields complete
         5 - Existing user
 
-
-
-
      */
 
+    static public int checkCompletedFields(String... input) {
 
+        for (int i = 0; i < input.length; i++) {
+            if (input[i].trim().length() == 0) {
+                return 1;
+            }
+        }
+
+        return 0;
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,69 +62,83 @@ public class SignUpActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFA500")));
         //assign screen element variables to fields
-        name = (EditText)findViewById(R.id.editText_Name);
-        surname = (EditText)findViewById(R.id.editText_Surname);
-        password = (EditText)findViewById(R.id.editText_Password);
-        confirmPassword = (EditText)findViewById(R.id.editText_ConfirmPassword);
-        username = (EditText)findViewById(R.id.editText_Username);
-        email = (EditText)findViewById(R.id.editText_EmailAddress);
-        phonenumber = (EditText)findViewById(R.id.editText_PhoneNumber);
-        agent = (CheckBox)findViewById(R.id.checkBox_Agent);
-        signUp = (Button)findViewById(R.id.button_SignUpSend);
+        name = (EditText) findViewById(R.id.editText_Name);
+        surname = (EditText) findViewById(R.id.editText_Surname);
+        password = (EditText) findViewById(R.id.editText_Password);
+        confirmPassword = (EditText) findViewById(R.id.editText_ConfirmPassword);
+        username = (EditText) findViewById(R.id.editText_Username);
+        email = (EditText) findViewById(R.id.editText_EmailAddress);
+        phonenumber = (EditText) findViewById(R.id.editText_PhoneNumber);
+        agent = (CheckBox) findViewById(R.id.checkBox_Agent);
+        signUp = (Button) findViewById(R.id.button_SignUpSend);
         //php url for insert
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertUser.php";
 
-        resultTextView = (TextView)findViewById(R.id.textView_signUp_result);
-    }
-
-    public int checkCompletedFields(){
-        if(
-                name.getText().toString().trim().length() == 0 ||
-                surname.getText().toString().trim().length() == 0 ||
-                password.getText().toString().trim().length() == 0 ||
-                confirmPassword.getText().toString().trim().length() == 0 ||
-                username.getText().toString().trim().length() == 0 ||
-                email.getText().toString().trim().length() == 0 ||
-                phonenumber.getText().toString().trim().length() == 0
-
-                ){
-
-            return 1; //There is an empty field
-        }else {
-            return 0; //All fields are complete
-        }
+        resultTextView = (TextView) findViewById(R.id.textView_signUp_result);
     }
 
     //on click method for signup button
     public void signUpUser(View v) {
-        //get current values from fields
-        final String usernameData = username.getText().toString().trim();
-        final String passwordData = password.getText().toString().trim();
-        final String nameData = name.getText().toString().trim();
-        final String surnameData = surname.getText().toString().trim();
-        final String confirmPasswordData = confirmPassword.getText().toString().trim();
-        final String phonenumberData = phonenumber.getText().toString().trim();
-        final String emailData = email.getText().toString().trim();
-        final boolean agentBool = agent.isChecked();
+        signUpUserTestable(false);
+    }
+
+    public void signUpUserTestable(boolean isTest) {
+
+        final String TEST_STRING = "TEST";
+        final String TEST_NUMBER = "1234";
+        final String TEST_AGENT_DATA = "A";
+
+        final String usernameData;
+        final String passwordData;
+        final String nameData;
+        final String surnameData;
+        final String confirmPasswordData;
+        final String phonenumberData;
+        final String emailData;
+        final boolean agentBool;
         final String agentData;
-        if(agentBool){
-            agentData = "A";
-        }else{
-            agentData = "R";
+
+        if(!isTest) {
+            //get current values from fields
+            usernameData = username.getText().toString().trim();
+            passwordData = password.getText().toString().trim();
+            nameData = name.getText().toString().trim();
+            surnameData = surname.getText().toString().trim();
+            confirmPasswordData = confirmPassword.getText().toString().trim();
+            phonenumberData = phonenumber.getText().toString().trim();
+            emailData = email.getText().toString().trim();
+            agentBool = agent.isChecked();
+
+
+            if (agentBool) {
+                agentData = "A";
+            } else {
+                agentData = "R";
+            }
+        }else {
+            usernameData = TEST_STRING;
+            passwordData = TEST_STRING;
+            nameData = TEST_STRING;
+            surnameData = TEST_STRING;
+            confirmPasswordData = TEST_STRING;
+            phonenumberData = TEST_NUMBER;
+            emailData = TEST_STRING;
+            agentData = TEST_AGENT_DATA;
         }
 
         //Error validation
-
-
-
         //if passwords match send data for query
-        if (checkCompletedFields() == 0) {
+        if (checkCompletedFields(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData) == 0) {
+
             if (passwordData.equals(confirmPasswordData)) {
+
+
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 resultTextView.setText(response);
+
 
                                 //Success
                                 if (response.equals("0")) {
@@ -162,14 +181,11 @@ public class SignUpActivity extends AppCompatActivity {
                 resultTextView.setText("3");
                 Toast.makeText(getApplicationContext(), getString(R.string.SignUp_PasswordNoMatch_3), Toast.LENGTH_LONG).show();
             }
-        }else {
+        } else {
             resultTextView.setText("4");
             Toast.makeText(getApplicationContext(), getString(R.string.SignUp_FieldsIncomplete_4), Toast.LENGTH_LONG).show();
         }
     }
 
-    public static int processJSON(String json) {
-        System.out.println(json);
-        return Integer.parseInt(json);
-    }
+
 }
