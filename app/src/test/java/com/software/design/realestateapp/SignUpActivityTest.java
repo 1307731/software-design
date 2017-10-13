@@ -1,26 +1,19 @@
 package com.software.design.realestateapp;
 
-import android.content.Context;
-import android.content.Intent;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowApplication;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-import static org.robolectric.Shadows.shadowOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by kyle on 2017/10/09.
@@ -58,7 +51,6 @@ public class SignUpActivityTest {
     private String agentData;
 
 
-
     @Test
     public void checkCompletedFields() throws Exception {
 
@@ -74,22 +66,20 @@ public class SignUpActivityTest {
         agentData = TEST_AGENT_DATA;
 
 
-
         // All valid
-        assertThat(t.checkCompletedFields(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData),is(0));
+        assertThat(t.checkCompletedFields(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData), is(0));
         //Missing Entries
         assertThat(t.checkCompletedFields(usernameData, passwordData, nameData, surnameData, "", "", "", ""), is(1));
         //String too short, but none missing
         assertThat(t.checkCompletedFields(usernameData, passwordData, nameData, surnameData, ""), is(1));
         //Nothing entered
-        assertThat(t.checkCompletedFields(""),is(1));
+        assertThat(t.checkCompletedFields(""), is(1));
     }
 
     @Test
-    public void signUpUserTestable() throws Exception{
+    public void signUpUserTestable() throws Exception {
 
         SignUpActivity t = Robolectric.setupActivity(SignUpActivity.class);
-
 
 
         TextView resultTextView = (TextView) t.findViewById(R.id.textView_signUp_result);
@@ -112,12 +102,11 @@ public class SignUpActivityTest {
         confirmPassword.setText(TEST_VALID_CONFIRM_PASSWORD);
         phonenumber.setText(TEST_VALID_NUMBER);
         email.setText(TEST_VALID_EMAIL);
-        agent.setChecked (TEST_AGENT);
+        agent.setChecked(TEST_AGENT);
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(),"0");
-
+        assertEquals(resultTextView.getText().toString(), "0");
 
 
         //Passwords do not match
@@ -128,11 +117,11 @@ public class SignUpActivityTest {
         confirmPassword.setText(TEST_INVALID_CONFIRM_PASSWORD);
         phonenumber.setText(TEST_VALID_NUMBER);
         email.setText(TEST_VALID_EMAIL);
-        agent.setChecked (TEST_AGENT);
+        agent.setChecked(TEST_AGENT);
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(),"3");
+        assertEquals(resultTextView.getText().toString(), "3");
 
         //Missing field
         username.setText(TEST_VALID_USERNAME);
@@ -142,11 +131,11 @@ public class SignUpActivityTest {
         confirmPassword.setText(TEST_VALID_CONFIRM_PASSWORD);
         phonenumber.setText(TEST_VALID_NUMBER);
         email.setText(TEST_EMPTY_STRING);
-        agent.setChecked (TEST_AGENT);
+        agent.setChecked(TEST_AGENT);
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(),"1");
+        assertEquals(resultTextView.getText().toString(), "1");
 
         //Invalid Email
         username.setText(TEST_VALID_USERNAME);
@@ -156,11 +145,11 @@ public class SignUpActivityTest {
         confirmPassword.setText(TEST_VALID_CONFIRM_PASSWORD);
         phonenumber.setText(TEST_VALID_NUMBER);
         email.setText(TEST_INVALID_EMAIL);
-        agent.setChecked (TEST_AGENT);
+        agent.setChecked(TEST_AGENT);
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(),"1");
+        assertEquals(resultTextView.getText().toString(), "1");
 
         //Invalid name
         username.setText(TEST_VALID_USERNAME);
@@ -170,11 +159,11 @@ public class SignUpActivityTest {
         confirmPassword.setText(TEST_VALID_CONFIRM_PASSWORD);
         phonenumber.setText(TEST_VALID_NUMBER);
         email.setText(TEST_VALID_EMAIL);
-        agent.setChecked (TEST_AGENT);
+        agent.setChecked(TEST_AGENT);
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(),"1");
+        assertEquals(resultTextView.getText().toString(), "1");
 
         //Invalid Username
         username.setText(TEST_INVALID_USERNAME);
@@ -184,11 +173,11 @@ public class SignUpActivityTest {
         confirmPassword.setText(TEST_VALID_CONFIRM_PASSWORD);
         phonenumber.setText(TEST_VALID_NUMBER);
         email.setText(TEST_VALID_EMAIL);
-        agent.setChecked (TEST_AGENT);
+        agent.setChecked(TEST_AGENT);
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(),"1");
+        assertEquals(resultTextView.getText().toString(), "1");
 
         //Invalid phonenumber
         username.setText(TEST_VALID_USERNAME);
@@ -198,11 +187,11 @@ public class SignUpActivityTest {
         confirmPassword.setText(TEST_VALID_CONFIRM_PASSWORD);
         phonenumber.setText(TEST_INVALID_NUMBER);
         email.setText(TEST_VALID_EMAIL);
-        agent.setChecked (TEST_AGENT);
+        agent.setChecked(TEST_AGENT);
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(),"1");
+        assertEquals(resultTextView.getText().toString(), "1");
 
         //Invalid Passwords
         username.setText(TEST_VALID_USERNAME);
@@ -212,11 +201,11 @@ public class SignUpActivityTest {
         confirmPassword.setText(TEST_VALID_CONFIRM_PASSWORD);
         phonenumber.setText(TEST_VALID_NUMBER);
         email.setText(TEST_VALID_EMAIL);
-        agent.setChecked (TEST_AGENT);
+        agent.setChecked(TEST_AGENT);
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(),"1");
+        assertEquals(resultTextView.getText().toString(), "1");
 
     }
 

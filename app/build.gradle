@@ -3,16 +3,20 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
+        classpath 'com.dicedmelon.gradle:jacoco-android:+'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco-android'
 
+jacoco {
+    toolVersion = "0.7.2.201409121644"
+}
+
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.software.design.realestateapp"
         minSdkVersion 22
@@ -25,6 +29,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled true
+        }
+        debug {
             testCoverageEnabled true
         }
     }
@@ -40,6 +47,9 @@ android {
         timeOutInMs 20 * 60 * 1000  // 20 minutes
         installOptions "-d", "-t"
     }
+
+    compileOptions {
+    }
 }
 
 repositories {
@@ -48,25 +58,21 @@ repositories {
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-
-
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:design:+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.mcxiaoke.volley:library:1.0.6@aar'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:support-v4:+'
     compile 'com.google.android.gms:play-services-maps:11.0.4'
     testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:+"
-    testCompile "org.robolectric:robolectric:+"
-    testCompile 'org.assertj:assertj-core:1.7.1'
-    androidTestCompile "org.mockito:mockito-android:+"
-    androidTestCompile 'com.android.support:support-annotations:25.3.1'
+    testCompile 'org.mockito:mockito-core:+'
+    testCompile 'org.robolectric:robolectric:+'
+    androidTestCompile 'org.mockito:mockito-android:+'
+    androidTestCompile 'com.android.support:support-annotations:+'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
 }
