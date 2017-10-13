@@ -21,7 +21,7 @@ import java.util.Map;
 public class EvaluationActivity extends AppCompatActivity{
 
     //declare on screen element variables
-    EditText address, floors, plotArea, houseArea;
+    EditText address, floors, plotArea, houseArea, bathrooms, bedrooms, garages, suburb;
     String url;
 
     @Override
@@ -30,10 +30,13 @@ public class EvaluationActivity extends AppCompatActivity{
         setContentView(R.layout.activity_evaluation);
 
         //assign screen element variables to fields
-        address = (EditText) findViewById(R.id.editText_address);
-        floors = (EditText)findViewById(R.id.editText_floors);
-        plotArea = (EditText)findViewById(R.id.editText_plot);
-        houseArea = (EditText)findViewById(R.id.editText_houseArea);
+        address = (EditText) findViewById(R.id.edAddress);
+        // floors = (EditText)findViewById(R.id.editText_floors);
+        plotArea = (EditText)findViewById(R.id.edSizePlot);
+        houseArea = (EditText)findViewById(R.id.edSizeHouse);
+        bathrooms = (EditText)findViewById(R.id.edNumBath);
+        bedrooms = (EditText)findViewById(R.id.edNumBed);
+        garages = (EditText)findViewById(R.id.edNumGarages);
         //php url
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertHouse.php";
 
