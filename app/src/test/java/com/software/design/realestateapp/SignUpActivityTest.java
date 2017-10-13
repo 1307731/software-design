@@ -165,6 +165,20 @@ public class SignUpActivityTest {
 
         assertEquals(resultTextView.getText().toString(), "1");
 
+        //Invalid surname
+        username.setText(TEST_VALID_USERNAME);
+        password.setText(TEST_VALID_PASSWORD);
+        name.setText(TEST_VALID_NAME);
+        surname.setText(TEST_INVALID_NAME);
+        confirmPassword.setText(TEST_VALID_CONFIRM_PASSWORD);
+        phonenumber.setText(TEST_VALID_NUMBER);
+        email.setText(TEST_VALID_EMAIL);
+        agent.setChecked(TEST_AGENT);
+
+        t.signUpUserTestable(true);
+
+        assertEquals(resultTextView.getText().toString(), "1");
+
         //Invalid Username
         username.setText(TEST_INVALID_USERNAME);
         password.setText(TEST_VALID_PASSWORD);
