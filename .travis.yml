@@ -44,7 +44,7 @@ before_install:
 install:
     - sdkmanager --list || true
     - echo yes | sdkmanager "tools"
-    - echo yes | sdkmanager "platforms;android-ANDROID_API_LEVEL" # Latest platform required by SDK tools
+    - echo yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL" # Latest platform required by SDK tools
     - echo yes | sdkmanager "extras;android;m2repository"
     - echo yes | sdkmanager "extras;google;m2repository"
     - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
