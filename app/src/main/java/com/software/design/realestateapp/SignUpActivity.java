@@ -41,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
 
      */
 
-    static public int checkCompletedFields(String... input) {
+    public int checkCompletedFields(String... input) {
 
         for (int i = 0; i < input.length; i++) {
             if (input[i].trim().length() == 0) {
@@ -98,105 +98,110 @@ public class SignUpActivity extends AppCompatActivity {
         final boolean agentBool;
         final String agentData;
 
-        if(!isTest) {
-            //get current values from fields
-            usernameData = username.getText().toString().trim();
-            passwordData = password.getText().toString().trim();
-            nameData = name.getText().toString().trim();
-            surnameData = surname.getText().toString().trim();
-            confirmPasswordData = confirmPassword.getText().toString().trim();
-            phonenumberData = phonenumber.getText().toString().trim();
-            emailData = email.getText().toString().trim();
-            agentBool = agent.isChecked();
+        //get current values from fields
+        usernameData = username.getText().toString().trim();
+        passwordData = password.getText().toString().trim();
+        nameData = name.getText().toString().trim();
+        surnameData = surname.getText().toString().trim();
+        confirmPasswordData = confirmPassword.getText().toString().trim();
+        phonenumberData = phonenumber.getText().toString().trim();
+        emailData = email.getText().toString().trim();
+        agentBool = agent.isChecked();
 
 
-            if (agentBool) {
-                agentData = "A";
-            } else {
-                agentData = "R";
-            }
-        }else {
-            usernameData = TEST_STRING;
-            passwordData = TEST_STRING;
-            nameData = TEST_STRING;
-            surnameData = TEST_STRING;
-            confirmPasswordData = TEST_STRING;
-            phonenumberData = TEST_NUMBER;
-            emailData = TEST_STRING;
-            agentData = TEST_AGENT_DATA;
+        if (agentBool) {
+            agentData = "A";
+        } else {
+            agentData = "R";
         }
 
         //Error validation
 
         boolean valid = true;
         //check if all fields are complete
-        if (checkCompletedFields(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData) != 0)
-        {
-            valid=false;
+        if (checkCompletedFields(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData) != 0) {
+            valid = false;
             resultTextView.setText("4");
+            System.err.println("completed fields");
             Toast.makeText(getApplicationContext(), getString(R.string.SignUp_FieldsIncomplete_4), Toast.LENGTH_LONG).show();
         }
 
         //checks if passwords match
 
-        if (!passwordData.equals(confirmPasswordData))
-        {
-                //Passwords do not match
-                valid=false;
-                resultTextView.setText("3");
-                Toast.makeText(getApplicationContext(), getString(R.string.SignUp_PasswordNoMatch_3), Toast.LENGTH_LONG).show();
+        if (!passwordData.equals(confirmPasswordData)) {
+            //Passwords do not match
+            valid = false;
+            resultTextView.setText("3");
+            System.err.println("pass - confirm");
+            Toast.makeText(getApplicationContext(), getString(R.string.SignUp_PasswordNoMatch_3), Toast.LENGTH_LONG).show();
         }
 
         //checks if email is valid
-        if(!emailData.contains("@"))
-        {
+        if (!emailData.contains("@")) {
             //checks if email has a @ symbol
-            valid=false;
+            valid = false;
             resultTextView.setText("1");
+            System.err.println("contains @");
             Toast.makeText(getApplicationContext(), "Email is invalid", Toast.LENGTH_LONG).show();
         }
 
-        //checks if number contains only digits, android should cause this by default
-        if(!checkNumber(phonenumberData))
-        {
-            //checks if phone has only digits
-            valid=false;
+        if (usernameData.contains("*")) {
+            //checks if username has a * symbol
+            valid = false;
             resultTextView.setText("1");
+            System.err.println("contains *");
+            Toast.makeText(getApplicationContext(), "Username is invalid", Toast.LENGTH_LONG).show();
+        }
+
+        //checks if number contains only digits, android should cause this by default
+        if (!checkNumber(phonenumberData)) {
+            //checks if phone has only digits
+            valid = false;
+            resultTextView.setText("1");
+            System.err.println("phonenumber");
             Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_LONG).show();
         }
 
-        if(!checkName(nameData))
-        {
-            valid=false;
+        if (passwordData.length() <= 3) {
+            //checks if phone has only digits
+            valid = false;
             resultTextView.setText("1");
+            System.err.println("passLength");
+            Toast.makeText(getApplicationContext(), "Password too short", Toast.LENGTH_LONG).show();
+        }
+
+        if (!checkName(nameData)) {
+            valid = false;
+            resultTextView.setText("1");
+            System.err.println("name");
             Toast.makeText(getApplicationContext(), "Please make sure there are no numbers in the name", Toast.LENGTH_LONG).show();
         }
 
-        if(!checkName(surnameData))
-        {
-            valid=false;
+        if (!checkName(surnameData)) {
+            valid = false;
             resultTextView.setText("1");
+            System.err.println("surname");
             Toast.makeText(getApplicationContext(), "Please make sure there are no numbers in the name", Toast.LENGTH_LONG).show();
         }
 
         //creates user if valid
-        if(valid)
-        {
+        if (valid) {
 
             resultTextView.setText("0");
-            Toast.makeText(getApplicationContext(),"Adding user now", Toast.LENGTH_LONG).show();
-            createUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData);
+            Toast.makeText(getApplicationContext(), "Adding user now", Toast.LENGTH_LONG).show();
+            if (!isTest) {
+                createUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData);
+            } else {
+                mockCreateUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData);
+            }
         }
 
 
     }
 
-    public boolean checkName(String name)
-    {
-        for (int i = 0; i < name.length(); i++)
-        {
-            if(Character.isDigit(name.charAt(i)))
-            {
+    public boolean checkName(String name) {
+        for (int i = 0; i < name.length(); i++) {
+            if (Character.isDigit(name.charAt(i))) {
                 return false;
             }
         }
@@ -204,12 +209,9 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean checkNumber(String number)
-    {
-        for (int i = 0; i < number.length(); i++)
-        {
-            if(!Character.isDigit(number.charAt(i)))
-            {
+    public boolean checkNumber(String number) {
+        for (int i = 0; i < number.length(); i++) {
+            if (!Character.isDigit(number.charAt(i))) {
                 return false;
             }
         }
@@ -217,10 +219,9 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
-    public void createUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData)
-    {
+    public void createUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData) {
 
-        final String c_usernameData=usernameData, c_passwordData= passwordData, c_nameData=nameData, c_surnameData=surnameData, c_confirmPasswordData=confirmPasswordData, c_phonenumberData=phonenumberData, c_emailData=emailData, c_agentData= agentData;
+        final String c_usernameData = usernameData, c_passwordData = passwordData, c_nameData = nameData, c_surnameData = surnameData, c_confirmPasswordData = confirmPasswordData, c_phonenumberData = phonenumberData, c_emailData = emailData, c_agentData = agentData;
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -268,5 +269,8 @@ public class SignUpActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    public void mockCreateUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData) {
+        System.out.println("Create User Test");
+    }
 
 }
