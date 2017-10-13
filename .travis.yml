@@ -36,10 +36,10 @@ android:
 before_install:
     #- sudo apt upgrade -y
     - chmod +x gradlew
-    - mkdir "$ANDROID_HOME/licenses" || true
-    - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-    - android list targets
-    - ./gradlew dependencies || true
+    #- mkdir "$ANDROID_HOME/licenses" || true
+    #- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+    #- android list targets
+    #- ./gradlew dependencies || true
     
 install:
     - sdkmanager --list || true
