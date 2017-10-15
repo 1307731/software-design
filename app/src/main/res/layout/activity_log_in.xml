@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText_Password_Login"
+        android:layout_below="@+id/editText_Password_login"
         android:onClick="onLoginClick"
         android:text="Login"
         android:textColor="@android:color/holo_orange_dark"/>
 
     <EditText
-        android:id="@+id/editText_Username_Login"
+        android:id="@+id/editText_Username_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
@@ -30,13 +30,13 @@
         android:textColor="@android:color/holo_orange_dark"/>
 
     <EditText
-        android:id="@+id/editText_Password_Login"
+        android:id="@+id/editText_Password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText_Username_Login"
+        android:layout_below="@+id/editText_Username_login"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPersonName|textPassword"
@@ -47,10 +47,19 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
+        android:onClick="onSignUpClick"
         android:text="Sign Up"
         android:textColor="@android:color/holo_orange_dark"
         tools:layout_editor_absoluteX="206dp"
-        tools:layout_editor_absoluteY="213dp"
-        android:layout_alignParentEnd="true" />
+        tools:layout_editor_absoluteY="213dp" />
+
+    <TextView
+        android:id="@+id/textView_logIn_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_signup"
+        android:layout_alignParentEnd="true"
+        android:text="0" />
 </android.widget.RelativeLayout>
