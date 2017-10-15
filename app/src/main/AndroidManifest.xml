@@ -19,8 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity android:name=".LogInActivity" />
-        <activity android:name=".SignUpActivity" />
+
+        <activity
+            android:name=".LogInActivity" />
+
+        <activity
+            android:name=".SignUpActivity" />
+
         <activity
             android:name=".WelcomeScreen"
             android:theme="@style/SplashTheme">
@@ -29,12 +34,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer_activity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".RoomActivity"></activity>
-        <activity android:name=".EvaluationActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".RoomActivity"/>
+
+        <activity
+            android:name=".EvaluationActivity"/>
+
         <!--Specifying the api key for the map view in the map fragment-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
