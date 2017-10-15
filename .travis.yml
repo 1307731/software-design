@@ -56,5 +56,6 @@ script:
     ./gradlew build test lint jacocoTestReport
 
 after_success:
+- pwd
 - bash <(curl -s https://codecov.io/bash)
 
