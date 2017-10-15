@@ -161,8 +161,13 @@ public class LogInActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+
     public void mockSendLoginData(String usernameData, String passwordData) {
         System.out.println("Logging in");
+
+        Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
+        intent.putExtra("Username", usernameData);
+        startActivity(intent);
     }
 
 
