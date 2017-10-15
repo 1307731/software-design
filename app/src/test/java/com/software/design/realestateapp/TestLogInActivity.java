@@ -100,5 +100,15 @@ public class TestLogInActivity  {
         assertEquals(resultTextView.getText().toString(), "1");
     }
 
+    @Test
+    public void onSignUpClick(){
+        LogInActivity t = Robolectric.setupActivity(LogInActivity.class);
+
+        t.onSignUpClick(t.findViewById(R.id.button_signup));
+
+        Intent expectedIntent = new Intent(t, SignUpActivity.class);
+        Intent actual = ShadowApplication.getInstance().getNextStartedActivity();
+        assertEquals(expectedIntent.getComponent(), actual.getComponent());
+    }
 
 }
