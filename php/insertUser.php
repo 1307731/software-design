@@ -20,7 +20,8 @@ function createUser(){
 	$NAME = $_POST["NAME"];
 	$SURNAME = $_POST["SURNAME"];
 	
-	$stmt2 = $connect->prepare("SELECT count(*) FROM USERS WHERE USERNAME = ?");
+	$stmt2 = userCheckStatement($connect);
+	
 	$stmt2->bind_param("s", $USERNAME);
 	$stmt2->execute();
 	$stmt2->bind_result($num);
@@ -30,18 +31,18 @@ function createUser(){
 		//existing user
 		echo 5;
 	}else{
-		$stmt = $connect->prepare("INSERT INTO USERS(ID,USERNAME,PASSWORD,EMAIL,USER_TYPE,PHONENUMBER,NAME,SURNAME) VALUES (?,?,?,?,?,?,?,?)");
-		$stmt->bind_param("isssssss",$null,$USERNAME,$PASSWORD,$EMAIL,$USER_TYPE,$PHONENUMBER,$NAME,$SURNAME);
-		$stmt->execute();
 	
-        $numrows = $stmt->affected_rows;
-		if(!$numrows){
-			//fail
-			echo 1;
-		}else{
-			//success
-			echo 0;
-		}
+		$stmt = createStatementInsert($connect);
+		
+		$testthing = $stmt->param_count;
+		//echo $testthing;
+		//echo '\n';
+		$stmt->bind_param("isssssss",$null,$USERNAME,$PASSWORD,$EMAIL,$USER_TYPE,$PHONENUMBER,$NAME,$SURNAME);
+        //echo '\n';
+		$stmt->execute();
+		$numrows = $stmt->affected_rows;
+		
+		processStatement($numrows);
 
         $stmt->close();
 	}
@@ -49,5 +50,31 @@ function createUser(){
     $connect->close();
 }
 
+function processStatement($numrows){
+        
+		if(!$numrows){
+			//fail
+			echo 0;
+			return 0;
+		}else{
+			//success
+			echo 1;
+			return 1;
+		}
+}
+
+function createStatementInsert($connect){
+	//print_r($connect);
+	$stmt1 = $connect->prepare("INSERT INTO USERS(ID,USERNAME,PASSWORD,EMAIL,USER_TYPE,PHONENUMBER,NAME,SURNAME) VALUES (?,?,?,?,?,?,?,?)");
+	//print_r($stmt1);
+	return $stmt1;
+}
+
+function userCheckStatement($connect){
+	$stmt1 = $connect->prepare("SELECT count(*) FROM USERS WHERE USERNAME = ?");
+	//print_r($stmt1);
+	return $stmt1;
+}
+//delete from USERS where password like "123";
 ?>
 
