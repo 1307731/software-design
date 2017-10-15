@@ -20,35 +20,26 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class SignUpActivityTest {
+public class TestSignUpActivity {
 
-    final String TEST_VALID_USERNAME = "TEST";
-    final String TEST_VALID_NUMBER = "1234";
-    final String TEST_VALID_EMAIL = "TEST@TEST.TEST";
-    final String TEST_VALID_NAME = "TEST";
-    final String TEST_VALID_PASSWORD = "TEST";
-    final String TEST_VALID_CONFIRM_PASSWORD = "TEST";
+    private String TEST_VALID_USERNAME = "TEST";
+    private String TEST_VALID_NUMBER = "1234";
+    private String TEST_VALID_EMAIL = "TEST@TEST.TEST";
+    private String TEST_VALID_NAME = "TEST";
+    private String TEST_VALID_PASSWORD = "TEST";
+    private String TEST_VALID_CONFIRM_PASSWORD = "TEST";
 
-    final String TEST_INVALID_USERNAME = "TEST*";
-    final String TEST_INVALID_NUMBER = "1234AB";
-    final String TEST_INVALID_EMAIL = "TEST.TEST.TEST";
-    final String TEST_INVALID_NAME = "TEST2";
-    final String TEST_INVALID_PASSWORD = "TES";
-    final String TEST_INVALID_CONFIRM_PASSWORD = "TEST2";
-    final String TEST_EMPTY_STRING = "";
+    private String TEST_INVALID_USERNAME = "TEST*";
+    private String TEST_INVALID_NUMBER = "1234AB";
+    private String TEST_INVALID_EMAIL = "TEST.TEST.TEST";
+    private String TEST_INVALID_NAME = "TEST2";
+    private String TEST_INVALID_PASSWORD = "TES";
+    private String TEST_INVALID_CONFIRM_PASSWORD = "TEST2";
+    private String TEST_EMPTY_STRING = "";
 
-    final boolean TEST_AGENT = false;
-    final String TEST_AGENT_DATA = "A";
+    private boolean TEST_AGENT = false;
+    private String TEST_AGENT_DATA = "A";
 
-    private String usernameData;
-    private String passwordData;
-    private String nameData;
-    private String surnameData;
-    private String confirmPasswordData;
-    private String phonenumberData;
-    private String emailData;
-    private boolean agentBool;
-    private String agentData;
 
 
     @Test
@@ -56,24 +47,22 @@ public class SignUpActivityTest {
 
         SignUpActivity t = Robolectric.setupActivity(SignUpActivity.class);
 
-        usernameData = TEST_VALID_USERNAME;
-        passwordData = TEST_VALID_PASSWORD;
-        nameData = TEST_VALID_NAME;
-        surnameData = TEST_VALID_NAME;
-        confirmPasswordData = TEST_VALID_CONFIRM_PASSWORD;
-        phonenumberData = TEST_VALID_NUMBER;
-        emailData = TEST_VALID_EMAIL;
-        agentData = TEST_AGENT_DATA;
+        String usernameData = TEST_VALID_USERNAME;
+        String passwordData = TEST_VALID_PASSWORD;
+        String nameData = TEST_VALID_NAME;
+        String surnameData = TEST_VALID_NAME;
+        String confirmPasswordData = TEST_VALID_CONFIRM_PASSWORD;
+        String phonenumberData = TEST_VALID_NUMBER;
+        String emailData = TEST_VALID_EMAIL;
+        String agentData = TEST_AGENT_DATA;
 
 
         // All valid
         assertThat(t.checkCompletedFields(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData), is(0));
         //Missing Entries
-        assertThat(t.checkCompletedFields(usernameData, passwordData, nameData, surnameData, "", "", "", ""), is(1));
-        //String too short, but none missing
-        assertThat(t.checkCompletedFields(usernameData, passwordData, nameData, surnameData, ""), is(1));
+        assertThat(t.checkCompletedFields(usernameData, passwordData, nameData, surnameData, TEST_EMPTY_STRING, TEST_EMPTY_STRING, TEST_EMPTY_STRING, TEST_EMPTY_STRING), is(1));
         //Nothing entered
-        assertThat(t.checkCompletedFields(""), is(1));
+        assertThat(t.checkCompletedFields(TEST_EMPTY_STRING), is(1));
     }
 
     @Test
@@ -84,14 +73,14 @@ public class SignUpActivityTest {
 
         TextView resultTextView = (TextView) t.findViewById(R.id.textView_signUp_result);
 
-        EditText name = (EditText) t.findViewById(R.id.editText_Name);
-        EditText surname = (EditText) t.findViewById(R.id.editText_Surname);
-        EditText password = (EditText) t.findViewById(R.id.editText_Password);
-        EditText confirmPassword = (EditText) t.findViewById(R.id.editText_ConfirmPassword);
-        EditText username = (EditText) t.findViewById(R.id.editText_Username);
-        EditText email = (EditText) t.findViewById(R.id.editText_EmailAddress);
-        EditText phonenumber = (EditText) t.findViewById(R.id.editText_PhoneNumber);
-        CheckBox agent = (CheckBox) t.findViewById(R.id.checkBox_Agent);
+        EditText name = (EditText) t.findViewById(R.id.editText_Name_signup);
+        EditText surname = (EditText) t.findViewById(R.id.editText_Surname_signup);
+        EditText password = (EditText) t.findViewById(R.id.editText_Password_signup);
+        EditText confirmPassword = (EditText) t.findViewById(R.id.editText_ConfirmPassword_signup);
+        EditText username = (EditText) t.findViewById(R.id.editText_Username_signup);
+        EditText email = (EditText) t.findViewById(R.id.editText_EmailAddress_signup);
+        EditText phonenumber = (EditText) t.findViewById(R.id.editText_PhoneNumber_signup);
+        CheckBox agent = (CheckBox) t.findViewById(R.id.checkBox_Agent_signup);
         Button signUp = (Button) t.findViewById(R.id.button_SignUpSend);
 
         //Everything Correct
@@ -207,7 +196,7 @@ public class SignUpActivityTest {
 
         assertEquals(resultTextView.getText().toString(), "1");
 
-        //Invalid Passwords
+        //Invalid Password
         username.setText(TEST_VALID_USERNAME);
         password.setText(TEST_INVALID_PASSWORD);
         name.setText(TEST_VALID_NAME);
