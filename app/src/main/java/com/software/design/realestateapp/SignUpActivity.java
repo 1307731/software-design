@@ -43,8 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     public int checkCompletedFields(String... input) {
 
-        for (int i = 0; i < input.length; i++) {
-            if (input[i].trim().length() == 0) {
+        for (String anInput : input) {
+            if (anInput.trim().length() == 0) {
                 return 1;
             }
         }
@@ -62,14 +62,14 @@ public class SignUpActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFA500")));
         //assign screen element variables to fields
-        name = (EditText) findViewById(R.id.editText_Name);
-        surname = (EditText) findViewById(R.id.editText_Surname);
-        password = (EditText) findViewById(R.id.editText_Password);
-        confirmPassword = (EditText) findViewById(R.id.editText_ConfirmPassword);
-        username = (EditText) findViewById(R.id.editText_Username);
-        email = (EditText) findViewById(R.id.editText_EmailAddress);
-        phonenumber = (EditText) findViewById(R.id.editText_PhoneNumber);
-        agent = (CheckBox) findViewById(R.id.checkBox_Agent);
+        name = (EditText) findViewById(R.id.editText_Name_signup);
+        surname = (EditText) findViewById(R.id.editText_Surname_signup);
+        password = (EditText) findViewById(R.id.editText_Password_signup);
+        confirmPassword = (EditText) findViewById(R.id.editText_ConfirmPassword_signup);
+        username = (EditText) findViewById(R.id.editText_Username_signup);
+        email = (EditText) findViewById(R.id.editText_EmailAddress_signup);
+        phonenumber = (EditText) findViewById(R.id.editText_PhoneNumber_signup);
+        agent = (CheckBox) findViewById(R.id.checkBox_Agent_signup);
         signUp = (Button) findViewById(R.id.button_SignUpSend);
         //php url for insert
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertUser.php";
@@ -223,7 +223,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         final String c_usernameData = usernameData, c_passwordData = passwordData, c_nameData = nameData, c_surnameData = surnameData, c_confirmPasswordData = confirmPasswordData, c_phonenumberData = phonenumberData, c_emailData = emailData, c_agentData = agentData;
 
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -232,14 +231,12 @@ public class SignUpActivity extends AppCompatActivity {
 
 
                         //Success
-                        if (response.equals("0")) {
+                        if (response.contains("0")) {
                             Toast.makeText(getApplicationContext(), getString(R.string.SignUp_CreatedUser_0), Toast.LENGTH_LONG).show();
-                        } else if (response.equals("1")) {
+
+                        } else if (response.contains("1")) {
                             Toast.makeText(getApplicationContext(), getString(R.string.SignUp_Failed_1), Toast.LENGTH_LONG).show();
                         }
-
-                        //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-
 
                     }
                 },
