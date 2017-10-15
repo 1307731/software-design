@@ -1,6 +1,5 @@
 package com.software.design.realestateapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -27,67 +27,115 @@ public class LogInActivity extends AppCompatActivity {
     Button login;
     EditText username, password;
     String url;
+    TextView resultTextView;
+
+
+    /*
+    Result Codes:
+        0 - Success
+        1 - Fail
+        2 - Text too long
+        3 - Passwords do not match
+        4 - Not all fields complete
+        5 - Existing user
+
+        */
+
+    //method that returns values based on the servers response
+
+    public int checkCompletedFields(String... input) {
+
+        for (String anInput : input) {
+            if (anInput.trim().length() == 0) {
+                return 1;
+            }
+        }
+        return 0;
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         //assign the signup button to the variable and initialize a listener for a click
-        signUp = (Button)findViewById(R.id.button_signup);
+        signUp = (Button) findViewById(R.id.button_signup);
         //Change action bar - move this to styles next sprint
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFA500")));
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create intent to switch to signup activity
-                Intent changeToSignUp = new Intent(LogInActivity.this, SignUpActivity.class);
-                startActivity(changeToSignUp);
 
-
-            }
-        });
 
         //assign text fields to variables
-        username = (EditText)findViewById(R.id.editText_Username_Login);
-        password = (EditText)findViewById(R.id.editText_Password_Login);
+        username = (EditText) findViewById(R.id.editText_Username_login);
+        password = (EditText) findViewById(R.id.editText_Password_login);
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/existsUser.php";
 
-        login = (Button)findViewById(R.id.button_login);
+        login = (Button) findViewById(R.id.button_login);
+        resultTextView = (TextView) findViewById(R.id.textView_logIn_result);
+
     }
 
-    //method that returns values based on the servers response
-    public static int processJSON(String json) {
-        System.out.println(json);
-        if (json.contains("1")) {
-            return 1;
-        } else{
-            return 0;
+    public void onSignUpClick(View v){
+        Intent changeToSignUp = new Intent(LogInActivity.this, SignUpActivity.class);
+        startActivity(changeToSignUp);
+    }
+
+
+    public void loginUserTestable(boolean isTest) {
+        final String usernameData = username.getText().toString().trim();
+        final String passwordData = password.getText().toString().trim();
+
+        boolean valid = true;
+
+        if (checkCompletedFields(usernameData, passwordData) != 0) {
+            valid = false;
+            resultTextView.setText("4");
+            Toast.makeText(getApplicationContext(), getString(R.string.SignUp_FieldsIncomplete_4), Toast.LENGTH_LONG).show();
+        }
+
+        if (usernameData.contains("*")) {
+            //checks if username has a * symbol
+            valid = false;
+            resultTextView.setText("1");
+            Toast.makeText(getApplicationContext(), "Username is invalid", Toast.LENGTH_LONG).show();
+        }
+
+        if (passwordData.length() <= 3) {
+            //checks if phone has only digits
+            valid = false;
+            resultTextView.setText("1");
+            Toast.makeText(getApplicationContext(), "Password too short", Toast.LENGTH_LONG).show();
+        }
+
+        if(valid){
+            //resultTextView.setText("0");
+            if (!isTest) {
+                sendLoginData(usernameData, passwordData);
+            } else {
+                mockSendLoginData(usernameData,passwordData);
+            }
         }
     }
 
-    public void loginUser(){
-        final String usernameData = username.getText().toString().trim();
-        final String passwordData = password.getText().toString().trim();
+    public void sendLoginData(String usernameData, String passwordData){
+        final String c_usernameData = usernameData, c_passwordData = passwordData;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //Toast.makeText(LogInActivity.this,response,Toast.LENGTH_LONG).show();
-                        int result = processJSON(response);
+                        resultTextView.setText(response);
 
-                        if(result==0){
-                            System.out.println("result is: " + result);
-                            Toast.makeText(getApplicationContext(),"Existing found", Toast.LENGTH_LONG).show();
+                        if (response.contains("0")) {
                             Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
-                            intent.putExtra("Username", usernameData);
+                            intent.putExtra("Username", c_usernameData);
                             startActivity(intent);
 
                             finish();
 
-                        }else{
-                            Toast.makeText(getApplicationContext(),"No user found", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Login Details Incorrect", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -95,14 +143,15 @@ public class LogInActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LogInActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        resultTextView.setText("2");
+                        Toast.makeText(LogInActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("USERNAME",usernameData);
-                params.put("PASSWORD",passwordData);
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("USERNAME",c_usernameData);
+                params.put("PASSWORD", c_passwordData);
                 return params;
             }
 
@@ -112,41 +161,14 @@ public class LogInActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void onLoginClick(View v){
-        loginUser();
-
+    public void mockSendLoginData(String usernameData, String passwordData) {
+        System.out.println("Logging in");
     }
 
 
+    public void onLoginClick(View v) {
+        loginUserTestable(false);
 
-//    public void loginClick(View v) {
-//        ArrayList<String[]> list = new ArrayList<>();
-//        String user = username.getText().toString();
-//        String pass = password.getText().toString();
-//        if (!user.isEmpty() && !pass.isEmpty()) {
-//            list.add(new String[]{"username", user});
-//            list.add(new String[]{"password", pass});
-//
-//            AsyncHttpPost asyncHttpPost = new AsyncHttpPost(new AsyncHandler() {
-//
-//                @Override
-//                public void handleResponse(String response) {
-//
-//                    int result = processJSON(response);
-//
-//                    if (result == 1) {
-//                        Toast toast = Toast.makeText(getApplicationContext(), "Existing user", Toast.LENGTH_LONG);
-//                        toast.show();
-//                    } else {
-//                        Toast toast = Toast.makeText(getApplicationContext(), "Unknown username", Toast.LENGTH_LONG);
-//                        toast.show();
-//                    }
-//
-//
-//                }
-//
-//            });
-//            asyncHttpPost.execute("http://lamp.ms.wits.ac.za/~s1037363/realestate_app/test.php", list);
-//        }
-//    }
+    }
+
 }
