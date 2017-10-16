@@ -6,74 +6,56 @@ group: edge
 
 jdk: oraclejdk8
 
+before_cache:
+- rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/modules-2/modules-2.lock # Avoid to repack it due locks
+- rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/classAnalysis/classAnalysis.lock
+- rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/jarSnapshots/jarSnapshots.lock
+
+cache:
+    directories:
+        - ${TRAVIS_BUILD_DIR}/gradle/caches/
+        - ${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/
+
 env:
-  global:
-    - ANDROID_API_LEVEL=25
-    - ANDROID_TEST_LEVEL=23
-    - ANDROID_BUILD_TOOLS_VERSION=25.0.2
-#    - ANDROID_BUILD_TOOLS_VERSION=26.0.1
-    - ANDROID_ABI=armeabi-v7a
-    - ANDROID_TAG=google_apis
-
+    global:
+        - ANDROID_API_LEVEL=25
+        - ANDROID_TEST_LEVEL=23
+        - ANDROID_BUILD_TOOLS_VERSION=25.0.2
+    #    - ANDROID_BUILD_TOOLS_VERSION=26.0.1
+        - ANDROID_ABI=armeabi-v7a
+        - ANDROID_TAG=google_apis
+        
 android:
-  components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    - tools
-    - platform-tools
-    - tools
-
-    # The BuildTools version used by your project
-    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-
-    # The SDK version used to compile your project
-    - android-$ANDROID_API_LEVEL
-    - android-$ANDROID_TEST_LEVEL
-
-    # Additional components
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - extra-google-google_play_services
-    - addon-google_apis-google-$ANDROID_API_LEVEL
-
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    #- sys-img-armeabi-v7a-android-26
-    #- sys-img-armeabi-v7a-android-25
-    #- sys-img-armeabi-v7a-android-23
-
-    #- sys-img-armeabi-v7a-android-$ANDROID_API_LEVEL
-    #- sys-img-armeabi-v7a-android-$ANDROID_TEST_LEVEL
-    - sys-img-armeabi-v7a-google_apis-$ANDROID_TEST_LEVEL
+    components: # Cookbooks version: https://github.com/travis-ci/travis-cookbooks/tree/9c6cd11
+        - tools # Update preinstalled tools from revision 24.0.2 to 24.4.1
+        - build-tools-$ANDROID_BUILD_TOOLS_VERSION # Match build-tools version used in build.gradle
+        - platform-tools # Update platform-tools to revision 25.0.3+
+        - tools # Update tools from revision 24.4.1 to 25.2.5
+        
     
-
 before_install:
     #- sudo apt upgrade -y
     - chmod +x gradlew
-    - mkdir "$ANDROID_HOME/licenses" || true
-    - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-    - android list targets
-    - ./gradlew dependencies || true
-  
-before_script:
-    - echo no | android create avd --force -n test -t "android-"$ANDROID_TEST_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
-    - export QEMU_AUDIO_DRV=none && emulator -avd test -no-window &
-    #- emulator -avd test -no-audio -no-window &
-    - android-wait-for-emulator
-    - adb shell settings put global window_animation_scale 0.0
-    - adb shell settings put global transition_animation_scale 0.0
-    - adb shell settings put global animator_duration_scale 0.0
-    - adb shell input keyevent 82 &
+    #- mkdir "$ANDROID_HOME/licenses" || true
+    #- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+    #- android list targets
+    #- ./gradlew dependencies || true
+    
+install:
+    - sdkmanager --list || true
+    - echo yes | sdkmanager "tools"
+    - echo yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL" # Latest platform required by SDK tools
+    - echo yes | sdkmanager "extras;android;m2repository"
+    - echo yes | sdkmanager "extras;google;m2repository"
+    - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+    - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+    - sdkmanager --list || true
+
 
 script:
-    - travis_wait 30 ./gradlew build test connectedCheck jacocoTestReport
-    #- ./gradlew build connectedCheck -PdisablePreDex --stacktrace
-    #-./gradlew build testDebug
+    ./gradlew build test lint jacocoTestReport
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+- pwd
+- bash <(curl -s https://codecov.io/bash)
 
-licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'

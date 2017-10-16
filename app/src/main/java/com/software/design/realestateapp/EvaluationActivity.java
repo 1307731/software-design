@@ -26,11 +26,13 @@ import java.util.Map;
 public class EvaluationActivity extends AppCompatActivity{
 
     //declare on screen element variables
+
     EditText address, suburb, plotArea, houseArea, numBath, numBed, numGarage;
 
 
     boolean checked =false;
     String insertUrl = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertHouse2.php", weightsUrl, subUrl = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getSuburbPrice.php";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class EvaluationActivity extends AppCompatActivity{
 
         //assign screen element variables to fields
         address = (EditText) findViewById(R.id.edAddress);
+
         suburb = (EditText)findViewById(R.id.edSuburb);
         numBath = (EditText)findViewById(R.id.edNumBath);
         numBed = (EditText)findViewById(R.id.edNumBed);
@@ -48,6 +51,7 @@ public class EvaluationActivity extends AppCompatActivity{
 
         //loads weights to be used
         //loadWeights(weightsArr);
+
         //php url
 
 
