@@ -102,6 +102,7 @@
         android:text="Evaluate"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:onClick="doEvaluation"
         android:layout_marginBottom="31dp" />
 
     <EditText
@@ -141,30 +142,33 @@
         android:id="@+id/edSizeHouse"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
+        android:layout_alignStart="@+id/edSizePlot"
         android:layout_below="@+id/edSizePlot"
-        android:layout_alignStart="@+id/edSizePlot" />
+        android:ems="10"
+        android:hint="Enter House Size m2"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/edNumBath"
         android:layout_width="77dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
         android:layout_alignBaseline="@+id/txtNumBath"
         android:layout_alignBottom="@+id/txtNumBath"
-        android:layout_alignEnd="@+id/edSizeHouse" />
+        android:layout_alignEnd="@+id/edSizeHouse"
+        android:ems="10"
+        android:hint="Num Bath"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/edNumGarages"
         android:layout_width="77dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
         android:layout_alignBaseline="@+id/txtNumGarage"
         android:layout_alignBottom="@+id/txtNumGarage"
-        android:layout_alignStart="@+id/edNumBed" />
+        android:layout_alignStart="@+id/edNumBed"
+        android:ems="10"
+        android:hint="Num Garages"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/edNumBed"
@@ -174,6 +178,7 @@
         android:layout_alignBottom="@+id/txtNumBed"
         android:layout_alignStart="@+id/edNumBath"
         android:ems="10"
+        android:hint="Num Bed"
         android:inputType="number" />
 
     <CheckBox
@@ -182,6 +187,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/txtPool"
         android:layout_alignStart="@+id/edNumGarages"
+        android:onClick="doCheck"
         android:layout_marginStart="20dp" />
 
 </RelativeLayout>
