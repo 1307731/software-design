@@ -1,16 +1,11 @@
 package com.software.design.realestateapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -18,10 +13,7 @@ import org.robolectric.shadows.ShadowApplication;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
 /**
  * Created by kyle on 2017/08/30.
  */
