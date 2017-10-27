@@ -55,7 +55,7 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="fragment_news_feed_text">This is the layout where all *News Feed* stuff will go</string>
+    <string name="fragment_news_feed_text">Recent Evaluations</string>
     <string name="fragment_my_evaluations_text">This is the layout where all *My Evaluations* stuff will go</string>
 
 

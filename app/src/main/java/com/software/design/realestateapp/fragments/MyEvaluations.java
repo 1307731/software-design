@@ -31,6 +31,9 @@ public class MyEvaluations extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_my_evaluations, container, false);
+        View root = v.getRootView();
+        root.setBackgroundColor(getResources().getColor(R.color.grey));
+
         Button evalBtn = (Button) v.findViewById(R.id.addEvaluationBtn);
         evalBtn.setOnClickListener(this);
 
