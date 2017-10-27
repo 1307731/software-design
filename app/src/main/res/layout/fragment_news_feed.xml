@@ -6,10 +6,27 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView6"
+        android:layout_marginTop="30dp">
+
+        <LinearLayout
+            android:id="@+id/newsEvaluationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:text="@string/fragment_news_feed_text" />
+        android:gravity="center_horizontal"
+        android:text="@string/fragment_news_feed_text"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+        android:textColor="@color/white" />
 </RelativeLayout>

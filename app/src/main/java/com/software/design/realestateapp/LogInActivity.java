@@ -64,6 +64,8 @@ public class LogInActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFA500")));
 
+        findViewById(android.R.id.content).setBackgroundColor(getResources().getColor(R.color.grey));
+
 
         //assign text fields to variables
         username = (EditText) findViewById(R.id.editText_Username_login);
