@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,7 +22,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EvaluationActivity extends AppCompatActivity{
+public class EvaluationActivity extends AppCompatActivity implements VolleyResponseHandler {
 
     //declare on screen element variables
 
@@ -57,7 +56,24 @@ public class EvaluationActivity extends AppCompatActivity{
 
     }
 
-    public void sendInfo(final String suburbData,  final String addressData,final String bedData,final String bathData,final String plotAreaData,final String houseAreaData,final String garageData,final boolean bPoolData, final String evaluationData)
+    @Override
+    public void handleResponce(Object response, int key) {
+        if (key == 1) {
+
+            Toast.makeText(getApplicationContext(), "handled", Toast.LENGTH_LONG).show();
+            //Suburb price stuff here
+            //KEY IS SO THAT BOTH VOLLEY REQUESTS CAN CALL THE SAME FUNCTION, BUT DO DIFFERENT THINGS. NOT IDEAL, BUT I DONT HAVE TIME TO DO IT PROPERLY
+            //CAST IT BEFORE, ITS A BASIC OBJECT SO THAT MANY DIFFERENT THINGS CAN USE IT AS THEY NEED IT
+
+            //(JSONArray) response ........
+        }
+        if (key == 2) {
+            Toast.makeText(getApplicationContext(), "handled", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void sendInfo(final String suburbData, final String addressData, final String bedData, final String bathData, final String plotAreaData, final String houseAreaData, final String garageData, final boolean bPoolData, final String evaluationData)
     {
         System.out.println("Suburb is " + suburbData);
         int check=0;
@@ -72,7 +88,8 @@ public class EvaluationActivity extends AppCompatActivity{
                     public void onResponse(String response) {
                         System.out.println(response);
                         Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-
+                        //HERES THE RESPONCE HANDLER
+                        handleResponce(response, 2);
 
                     }
                 },
@@ -176,6 +193,7 @@ public class EvaluationActivity extends AppCompatActivity{
 
     }
 
+
     public void changeNum(int num)
     {
         num=100;
@@ -183,6 +201,9 @@ public class EvaluationActivity extends AppCompatActivity{
 
     public int fetchSuburbPrice(String suburbData)
     {
+
+
+        final String c_suburbData = suburbData;
 
         int subPric=-1;
         StringRequest stringRequest = new StringRequest(subUrl, new Response.Listener<String>() {
@@ -194,6 +215,10 @@ public class EvaluationActivity extends AppCompatActivity{
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray result = jsonObject.getJSONArray("result");
+
+                    //HERES THE RESPONSE HANDLER
+                    handleResponce(result, 1);
+
                     System.out.println(result);
                     JSONObject suburb = result.getJSONObject(0);
                     subPrice = suburb.getString("AVG_PRICE");
@@ -211,6 +236,7 @@ public class EvaluationActivity extends AppCompatActivity{
                         Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);

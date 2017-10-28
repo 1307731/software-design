@@ -5,4 +5,5 @@ package com.software.design.realestateapp;
  */
 
 public interface VolleyResponseHandler {
+    void handleResponce(Object response, int key);
 }
