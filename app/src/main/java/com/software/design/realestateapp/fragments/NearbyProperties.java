@@ -41,6 +41,8 @@ public class NearbyProperties extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState){
         //inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_properties_map, container, false);
+        View root = mView.getRootView();
+        root.setBackgroundColor(getResources().getColor(R.color.grey));
 
         return mView;
     }
