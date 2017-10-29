@@ -1,5 +1,6 @@
 package com.software.design.realestateapp;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,17 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements VolleyResponce {
 
     //declare on screen element variables
     Button signUp;
@@ -221,53 +215,52 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void createUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData) {
 
-        final String c_usernameData = usernameData, c_passwordData = passwordData, c_nameData = nameData, c_surnameData = surnameData, c_confirmPasswordData = confirmPasswordData, c_phonenumberData = phonenumberData, c_emailData = emailData, c_agentData = agentData;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        resultTextView.setText(response);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("USERNAME", usernameData);
+        params.put("PASSWORD", passwordData);
+        params.put("NAME", nameData);
+        params.put("SURNAME", surnameData);
+        params.put("EMAIL", emailData);
+        params.put("PHONENUMBER", phonenumberData);
+        params.put("USER_TYPE", agentData);
 
-
-                        //Success
-                        if (response.contains("0")) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.SignUp_CreatedUser_0), Toast.LENGTH_LONG).show();
-
-                        } else if (response.contains("1")) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.SignUp_Failed_1), Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        resultTextView.setText("2");
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("USERNAME", c_usernameData);
-                params.put("PASSWORD", c_passwordData);
-                params.put("NAME", c_nameData);
-                params.put("SURNAME", c_surnameData);
-                params.put("EMAIL", c_emailData);
-                params.put("PHONENUMBER", c_phonenumberData);
-                params.put("USER_TYPE", c_agentData);
-                return params;
-            }
-
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        int key = 1;
+        VolleyRequest volleyRequest = new VolleyRequest(url, params, this, key);
+        volleyRequest.makeRequest();
     }
 
     public void mockCreateUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData) {
         System.out.println("Create User Test");
     }
 
+    @Override
+    public void handleResponce(Object response, Map<String, String> map, int key) {
+        if (key == 1) {
+            String c_response = (String) response;
+            resultTextView.setText(c_response);
+
+
+            //Success
+            if (c_response.contains("0")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.SignUp_CreatedUser_0), Toast.LENGTH_LONG).show();
+
+            } else if (c_response.contains("1")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.SignUp_Failed_1), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void handleError(Object error, int key) {
+        if (key == 1) {
+            resultTextView.setText("2");
+            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
 }
