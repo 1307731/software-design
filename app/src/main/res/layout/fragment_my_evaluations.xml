@@ -53,5 +53,5 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="31dp"
         android:background="@android:drawable/ic_menu_rotate"
-        android:onClick="onTest" />
+        android:onClick="onClick" />
 </RelativeLayout>
