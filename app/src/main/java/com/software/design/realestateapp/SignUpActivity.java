@@ -24,6 +24,8 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
     String url;
     TextView resultTextView;
 
+    String testReciever;
+
     /*
     Result Codes:
         0 - Success
@@ -69,6 +71,8 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertUser.php";
 
         resultTextView = (TextView) findViewById(R.id.textView_signUp_result);
+
+        testReciever = new String();
     }
 
     //on click method for signup button
@@ -184,7 +188,7 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
             resultTextView.setText("0");
             Toast.makeText(getApplicationContext(), "Adding user now", Toast.LENGTH_LONG).show();
             if (!isTest) {
-                createUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData);
+                createUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData, isTest);
             } else {
                 mockCreateUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData);
             }
@@ -213,7 +217,7 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         return true;
     }
 
-    public void createUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData) {
+    public void createUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData, boolean isTest) {
 
 
         Map<String, String> params = new HashMap<String, String>();
@@ -227,7 +231,12 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
 
         int key = 1;
         VolleyRequest volleyRequest = new VolleyRequest(url, params, this, key);
-        volleyRequest.makeRequest();
+        if (!isTest) {
+            volleyRequest.makeRequest();
+        } else {
+            testReciever = "CreateUser";
+
+        }
     }
 
     public void mockCreateUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData) {
@@ -244,9 +253,11 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
             //Success
             if (c_response.contains("0")) {
                 Toast.makeText(getApplicationContext(), getString(R.string.SignUp_CreatedUser_0), Toast.LENGTH_LONG).show();
+                testReciever = "0";
 
             } else if (c_response.contains("1")) {
                 Toast.makeText(getApplicationContext(), getString(R.string.SignUp_Failed_1), Toast.LENGTH_LONG).show();
+                testReciever = "1";
             }
         }
     }
@@ -256,6 +267,7 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         if (key == 1) {
             resultTextView.setText("2");
             Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+            testReciever = "2";
         }
     }
 
