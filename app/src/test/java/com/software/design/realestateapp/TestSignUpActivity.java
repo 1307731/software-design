@@ -11,6 +11,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -210,6 +213,70 @@ public class TestSignUpActivity {
 
         assertEquals(resultTextView.getText().toString(), "1");
 
+    }
+
+    @Test
+    public void handleResponce() throws Exception {
+        SignUpActivity t = Robolectric.setupActivity(SignUpActivity.class);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("USERNAME", TEST_VALID_USERNAME);
+        params.put("PASSWORD", TEST_VALID_PASSWORD);
+        params.put("NAME", TEST_VALID_NAME);
+        params.put("SURNAME", TEST_VALID_NAME);
+        params.put("EMAIL", TEST_VALID_EMAIL);
+        params.put("PHONENUMBER", TEST_VALID_NUMBER);
+        params.put("USER_TYPE", "A");
+
+        String response1 = "0";
+        String response2 = "1";
+
+        t.handleResponce(response1, params, 1);
+
+        assertEquals(t.testReciever, "0");
+
+        t.handleResponce(response2, params, 1);
+
+        assertEquals(t.testReciever, "1");
+    }
+
+    @Test
+    public void handleError() throws Exception {
+        SignUpActivity t = Robolectric.setupActivity(SignUpActivity.class);
+
+        String error = "ERROR";
+
+        t.handleError(error, 1);
+
+        assertEquals(t.testReciever, "2");
+
+
+    }
+
+    @Test
+    public void getContext() throws Exception {
+        SignUpActivity t = Robolectric.setupActivity(SignUpActivity.class);
+
+        assertEquals(t.getContext(), t);
+
+    }
+
+    @Test
+    public void createUser() throws Exception {
+        SignUpActivity t = Robolectric.setupActivity(SignUpActivity.class);
+
+        String usernameData = TEST_VALID_USERNAME;
+        String passwordData = TEST_VALID_PASSWORD;
+        String nameData = TEST_VALID_NAME;
+        String surnameData = TEST_VALID_NAME;
+        String confirmPasswordData = TEST_VALID_CONFIRM_PASSWORD;
+        String phonenumberData = TEST_VALID_NUMBER;
+        String emailData = TEST_VALID_EMAIL;
+        String agentData = TEST_AGENT_DATA;
+
+        t.createUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData, true);
+
+        assertEquals(t.testReciever, "CreateUser");
     }
 
 }

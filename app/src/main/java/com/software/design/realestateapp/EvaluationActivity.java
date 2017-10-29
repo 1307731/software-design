@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,10 +27,12 @@ public class EvaluationActivity extends AppCompatActivity{
     //declare on screen element variables
 
     EditText address, suburb, plotArea, houseArea, numBath, numBed, numGarage;
+    int evalAmountTest;
 
 
     boolean checked =false;
     String insertUrl = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertHouse2.php", weightsUrl, subUrl = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getSuburbPrice.php";
+
 
 
     @Override
@@ -120,6 +121,10 @@ public class EvaluationActivity extends AppCompatActivity{
     public void doEvaluation(View view) //gets current value from fields
     {
 
+        doEvaluationTestable(false);
+    }
+
+    public void doEvaluationTestable(boolean isTest) {
         final String suburbData = suburb.getText().toString().trim();
         final String addressData = address.getText().toString().trim();
         final String bedData = numBed.getText().toString().trim();
@@ -133,13 +138,16 @@ public class EvaluationActivity extends AppCompatActivity{
         int subPrice=1000000;
         double weights[]=new double[10];
         loadWeights(weights);
+
         int evalAmount = evaluate(subPrice, addressData, bedData, bathData, plotAreaData,houseAreaData,garageData,poolData, weights);
-        sendInfo(suburbData, addressData, bedData, bathData, plotAreaData,houseAreaData,garageData,poolData,(evalAmount+""));
+        evalAmountTest = evalAmount;
+        if (!isTest) {
+            sendInfo(suburbData, addressData, bedData, bathData, plotAreaData, houseAreaData, garageData, poolData, (evalAmount + ""));
+        }
         int num = 100;
         changeNum(num);
 
         System.out.println(num);
-
     }
 
     public void loadWeights(double [] weightsArray)
