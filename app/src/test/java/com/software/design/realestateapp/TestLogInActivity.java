@@ -2,7 +2,6 @@ package com.software.design.realestateapp;
 
 import android.content.Intent;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +9,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
@@ -50,7 +52,6 @@ public class TestLogInActivity  {
     public void loginUserTestable() throws Exception{
         LogInActivity t = Robolectric.setupActivity(LogInActivity.class);
 
-        TextView resultTextView = (TextView) t.findViewById(R.id.textView_logIn_result);
 
         EditText username = (EditText) t.findViewById(R.id.editText_Username_login);
         EditText password = (EditText) t.findViewById(R.id.editText_Password_login);
@@ -61,11 +62,7 @@ public class TestLogInActivity  {
 
         t.loginUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "0");
-
-        Intent expectedIntent = new Intent(t, DrawerActivity.class);
-        Intent actual = ShadowApplication.getInstance().getNextStartedActivity();
-        assertEquals(expectedIntent.getComponent(), actual.getComponent());
+        assertEquals(t.testReciever, "0");
 
         //Missing field
         username.setText(TEST_VALID_USERNAME);
@@ -73,7 +70,7 @@ public class TestLogInActivity  {
 
         t.loginUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
         //Invalid Username
         username.setText(TEST_INVALID_USERNAME);
@@ -81,7 +78,7 @@ public class TestLogInActivity  {
 
         t.loginUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
         //Invalid Password
         username.setText(TEST_VALID_USERNAME);
@@ -89,7 +86,7 @@ public class TestLogInActivity  {
 
         t.loginUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
     }
 
     @Test
@@ -101,6 +98,53 @@ public class TestLogInActivity  {
         Intent expectedIntent = new Intent(t, SignUpActivity.class);
         Intent actual = ShadowApplication.getInstance().getNextStartedActivity();
         assertEquals(expectedIntent.getComponent(), actual.getComponent());
+    }
+
+    @Test
+    public void handleResponce() throws Exception {
+        LogInActivity t = Robolectric.setupActivity(LogInActivity.class);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("USERNAME", TEST_VALID_USERNAME);
+        params.put("PASSWORD", TEST_VALID_PASSWORD);
+
+        String response1 = "0";
+        String response2 = "1";
+
+
+        t.handleResponce(response2, params, 1);
+
+        assertEquals(t.testReciever, "Incorrect");
+
+        t.handleResponce(response1, params, 1);
+
+        assertEquals(t.testReciever, "0");
+
+        Intent expectedIntent = new Intent(t, DrawerActivity.class);
+        Intent actual = ShadowApplication.getInstance().getNextStartedActivity();
+        assertEquals(expectedIntent.getComponent(), actual.getComponent());
+
+    }
+
+    @Test
+    public void handleError() throws Exception {
+        LogInActivity t = Robolectric.setupActivity(LogInActivity.class);
+
+        String error = "ERROR";
+
+        t.handleError(error, 1);
+
+        assertEquals(t.testReciever, "2");
+
+
+    }
+
+    @Test
+    public void getContext() throws Exception {
+        LogInActivity t = Robolectric.setupActivity(LogInActivity.class);
+
+        assertEquals(t.getContext(), t);
+
     }
 
 }
