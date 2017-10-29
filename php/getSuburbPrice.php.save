@@ -21,8 +21,8 @@ function getHouse(){
     	die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$sql = "SELECT * FROM SUBURBS WHERE SUBURB LIKE '$NAME'";
-	//echo $sql;
+	
+$sql = "SELECT AVG_PRICE FROM suburbs WHERE SUBURB LIKE '$NAME'";
 	$result = mysqli_query($connect, $sql);
 
 	if (mysqli_num_rows($result) > 0) {
@@ -41,7 +41,7 @@ function getHouse(){
 
         // echoing JSON response
 	//print_r(json_encode($response));
-        //echo("test");
+        echo("test");
 	echo json_encode($response);
         
 	} else {
