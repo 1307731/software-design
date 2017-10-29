@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,9 +20,9 @@
         android:id="@+id/editText_Username_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
@@ -33,10 +32,10 @@
         android:id="@+id/editText_Password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/editText_Username_login"
+        android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPersonName|textPassword"
@@ -55,11 +54,4 @@
         tools:layout_editor_absoluteX="206dp"
         tools:layout_editor_absoluteY="213dp" />
 
-    <TextView
-        android:id="@+id/textView_logIn_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button_signup"
-        android:layout_alignParentEnd="true"
-        android:text="0" />
 </android.widget.RelativeLayout>

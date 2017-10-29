@@ -1,5 +1,6 @@
 package com.software.design.realestateapp;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -8,27 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements VolleyResponce {
 
     //declare on screen element variables
     Button signUp;
     EditText name, surname, password, confirmPassword, username, email, phonenumber;
     CheckBox agent;
     String url;
-    TextView resultTextView;
+
+    String testReciever;
 
     /*
     Result Codes:
@@ -74,7 +68,8 @@ public class SignUpActivity extends AppCompatActivity {
         //php url for insert
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertUser.php";
 
-        resultTextView = (TextView) findViewById(R.id.textView_signUp_result);
+
+        testReciever = new String();
     }
 
     //on click method for signup button
@@ -121,8 +116,8 @@ public class SignUpActivity extends AppCompatActivity {
         //check if all fields are complete
         if (checkCompletedFields(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData) != 0) {
             valid = false;
-            resultTextView.setText("4");
-            System.err.println("completed fields");
+            testReciever = "4";
+            
             Toast.makeText(getApplicationContext(), getString(R.string.SignUp_FieldsIncomplete_4), Toast.LENGTH_LONG).show();
         }
 
@@ -131,8 +126,8 @@ public class SignUpActivity extends AppCompatActivity {
         if (!passwordData.equals(confirmPasswordData)) {
             //Passwords do not match
             valid = false;
-            resultTextView.setText("3");
-            System.err.println("pass - confirm");
+            testReciever = "3";
+            
             Toast.makeText(getApplicationContext(), getString(R.string.SignUp_PasswordNoMatch_3), Toast.LENGTH_LONG).show();
         }
 
@@ -140,16 +135,16 @@ public class SignUpActivity extends AppCompatActivity {
         if (!emailData.contains("@")) {
             //checks if email has a @ symbol
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("contains @");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Email is invalid", Toast.LENGTH_LONG).show();
         }
 
         if (usernameData.contains("*")) {
             //checks if username has a * symbol
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("contains *");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Username is invalid", Toast.LENGTH_LONG).show();
         }
 
@@ -157,40 +152,40 @@ public class SignUpActivity extends AppCompatActivity {
         if (!checkNumber(phonenumberData)) {
             //checks if phone has only digits
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("phonenumber");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_LONG).show();
         }
 
         if (passwordData.length() <= 3) {
             //checks if phone has only digits
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("passLength");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Password too short", Toast.LENGTH_LONG).show();
         }
 
         if (!checkName(nameData)) {
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("name");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Please make sure there are no numbers in the name", Toast.LENGTH_LONG).show();
         }
 
         if (!checkName(surnameData)) {
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("surname");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Please make sure there are no numbers in the name", Toast.LENGTH_LONG).show();
         }
 
         //creates user if valid
         if (valid) {
 
-            resultTextView.setText("0");
+            testReciever = "0";
             Toast.makeText(getApplicationContext(), "Adding user now", Toast.LENGTH_LONG).show();
             if (!isTest) {
-                createUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData);
+                createUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData, isTest);
             } else {
                 mockCreateUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData);
             }
@@ -219,55 +214,62 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
-    public void createUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData) {
-
-        final String c_usernameData = usernameData, c_passwordData = passwordData, c_nameData = nameData, c_surnameData = surnameData, c_confirmPasswordData = confirmPasswordData, c_phonenumberData = phonenumberData, c_emailData = emailData, c_agentData = agentData;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        resultTextView.setText(response);
+    public void createUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData, boolean isTest) {
 
 
-                        //Success
-                        if (response.contains("0")) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.SignUp_CreatedUser_0), Toast.LENGTH_LONG).show();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("USERNAME", usernameData);
+        params.put("PASSWORD", passwordData);
+        params.put("NAME", nameData);
+        params.put("SURNAME", surnameData);
+        params.put("EMAIL", emailData);
+        params.put("PHONENUMBER", phonenumberData);
+        params.put("USER_TYPE", agentData);
 
-                        } else if (response.contains("1")) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.SignUp_Failed_1), Toast.LENGTH_LONG).show();
-                        }
+        int key = 1;
+        VolleyRequest volleyRequest = new VolleyRequest(url, params, this, key);
+        if (!isTest) {
+            volleyRequest.makeRequest();
+        } else {
+            testReciever = "CreateUser";
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        resultTextView.setText("2");
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("USERNAME", c_usernameData);
-                params.put("PASSWORD", c_passwordData);
-                params.put("NAME", c_nameData);
-                params.put("SURNAME", c_surnameData);
-                params.put("EMAIL", c_emailData);
-                params.put("PHONENUMBER", c_phonenumberData);
-                params.put("USER_TYPE", c_agentData);
-                return params;
-            }
-
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        }
     }
 
     public void mockCreateUser(String usernameData, String passwordData, String nameData, String surnameData, String confirmPasswordData, String phonenumberData, String emailData, String agentData) {
         System.out.println("Create User Test");
     }
 
+    @Override
+    public void handleResponce(Object response, Map<String, String> map, int key) {
+        if (key == 1) {
+            String c_response = (String) response;
+            testReciever = c_response;
+
+
+            //Success
+            if (c_response.contains("0")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.SignUp_CreatedUser_0), Toast.LENGTH_LONG).show();
+                testReciever = "0";
+
+            } else if (c_response.contains("1")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.SignUp_Failed_1), Toast.LENGTH_LONG).show();
+                testReciever = "1";
+            }
+        }
+    }
+
+    @Override
+    public void handleError(Object error, int key) {
+        if (key == 1) {
+            testReciever = "2";
+            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+            testReciever = "2";
+        }
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
 }

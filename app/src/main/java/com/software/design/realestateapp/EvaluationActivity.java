@@ -27,10 +27,12 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
     //declare on screen element variables
 
     EditText address, suburb, plotArea, houseArea, numBath, numBed, numGarage;
+    int evalAmountTest;
 
 
     boolean checked =false;
     String insertUrl = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertHouse2.php", weightsUrl, subUrl = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getSuburbPrice.php";
+
 
 
     @Override
@@ -137,6 +139,10 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
     public void doEvaluation(View view) //gets current value from fields
     {
 
+        doEvaluationTestable(false);
+    }
+
+    public void doEvaluationTestable(boolean isTest) {
         final String suburbData = suburb.getText().toString().trim();
         final String addressData = address.getText().toString().trim();
         final String bedData = numBed.getText().toString().trim();
@@ -150,13 +156,16 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
         int subPrice=1000000;
         double weights[]=new double[10];
         loadWeights(weights);
+
         int evalAmount = evaluate(subPrice, addressData, bedData, bathData, plotAreaData,houseAreaData,garageData,poolData, weights);
-        sendInfo(suburbData, addressData, bedData, bathData, plotAreaData,houseAreaData,garageData,poolData,(evalAmount+""));
+        evalAmountTest = evalAmount;
+        if (!isTest) {
+            sendInfo(suburbData, addressData, bedData, bathData, plotAreaData, houseAreaData, garageData, poolData, (evalAmount + ""));
+        }
         int num = 100;
         changeNum(num);
 
         System.out.println(num);
-
     }
 
     public void loadWeights(double [] weightsArray)
