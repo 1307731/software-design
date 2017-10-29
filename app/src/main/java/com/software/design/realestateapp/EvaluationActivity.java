@@ -1,5 +1,6 @@
 package com.software.design.realestateapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,14 +23,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EvaluationActivity extends AppCompatActivity implements VolleyResponseHandler {
+public class EvaluationActivity extends AppCompatActivity implements VolleyResponce {
 
     //declare on screen element variables
 
     EditText address, suburb, plotArea, houseArea, numBath, numBed, numGarage;
+    String suburbData, addressData, bedData, bathData, plotAreaData, houseAreaData, garageData;
+    boolean poolData;
     int evalAmountTest;
 
-
+    double suburbPri=-1;
     boolean checked =false;
     String insertUrl = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertHouse2.php", weightsUrl, subUrl = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getSuburbPrice.php";
 
@@ -58,7 +61,7 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
 
     }
 
-    @Override
+    /*@Override
     public void handleResponce(Object response, int key) {
         if (key == 1) {
 
@@ -73,67 +76,32 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
             Toast.makeText(getApplicationContext(), "handled", Toast.LENGTH_LONG).show();
         }
 
-    }
+    }*/
 
     public void sendInfo(final String suburbData, final String addressData, final String bedData, final String bathData, final String plotAreaData, final String houseAreaData, final String garageData, final boolean bPoolData, final String evaluationData)
     {
+
+
         System.out.println("Suburb is " + suburbData);
         int check=0;
         if(bPoolData)
         {
             check=1;
         }
-        final int poolData=check;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, insertUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println(response);
-                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-                        //HERES THE RESPONCE HANDLER
-                        handleResponce(response, 2);
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("ADDRESS", addressData);
-                params.put("SUBURB", suburbData);
-                params.put("PLOT_AREA", plotAreaData);
-                params.put("HOUSE_AREA", houseAreaData);
-                params.put("BEDROOMS_NUM", bedData);
-                params.put("BATHROOMS_NUM", bathData);
-                params.put("GARAGES_NUM", garageData);
-                params.put("POOL", poolData+"");
-                params.put("EVALUATION_AMOUNT", evaluationData);
-                return params;
-            }
-
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-
-        Intent startNewActivity = new Intent(this,HouseActivity.class);
-        startNewActivity.putExtra("ADDRESS", addressData);
-        startNewActivity.putExtra("SUBURB", suburbData);
-        startNewActivity.putExtra("PLOT_AREA", plotAreaData);
-        startNewActivity.putExtra("HOUSE_AREA", houseAreaData);
-        startNewActivity.putExtra("BEDROOMS_NUM", bedData);
-        startNewActivity.putExtra("BATHROOMS_NUM", bathData);
-        startNewActivity.putExtra("GARAGES_NUM", garageData);
-        startNewActivity.putExtra("POOL", poolData+"");
-        startNewActivity.putExtra("EVALUATION_AMOUNT", evaluationData);
-        startActivity(startNewActivity);
+        int poolData=check;
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("ADDRESS", addressData);
+        params.put("SUBURB", suburbData);
+        params.put("PLOT_AREA", plotAreaData);
+        params.put("HOUSE_AREA", houseAreaData);
+        params.put("BEDROOMS_NUM", bedData);
+        params.put("BATHROOMS_NUM", bathData);
+        params.put("GARAGES_NUM", garageData);
+        params.put("POOL", poolData+"");
+        params.put("EVALUATION_AMOUNT", evaluationData);
+        int key =2;
+        VolleyRequest volleyRequest = new VolleyRequest(insertUrl, params, this, key);
+        volleyRequest.makeRequest();
     }
 
     public void doEvaluation(View view) //gets current value from fields
@@ -143,29 +111,17 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
     }
 
     public void doEvaluationTestable(boolean isTest) {
-        final String suburbData = suburb.getText().toString().trim();
-        final String addressData = address.getText().toString().trim();
-        final String bedData = numBed.getText().toString().trim();
-        final String bathData = numBath.getText().toString().trim();
-        final String plotAreaData = plotArea.getText().toString().trim();
-        final String houseAreaData = houseArea.getText().toString().trim();
-        final String garageData = numGarage.getText().toString().trim();
-        final boolean poolData = checked;
+        suburbData = suburb.getText().toString().trim();
+       addressData = address.getText().toString().trim();
+        bedData = numBed.getText().toString().trim();
+        bathData = numBath.getText().toString().trim();
+        plotAreaData = plotArea.getText().toString().trim();
+        houseAreaData = houseArea.getText().toString().trim();
+       garageData = numGarage.getText().toString().trim();
+        poolData = checked;
 
-        //int subPrice = fetchSuburbPrice(suburbData);
-        int subPrice=1000000;
-        double weights[]=new double[10];
-        loadWeights(weights);
+        fetchSuburbPrice(suburbData);
 
-        int evalAmount = evaluate(subPrice, addressData, bedData, bathData, plotAreaData,houseAreaData,garageData,poolData, weights);
-        evalAmountTest = evalAmount;
-        if (!isTest) {
-            sendInfo(suburbData, addressData, bedData, bathData, plotAreaData, houseAreaData, garageData, poolData, (evalAmount + ""));
-        }
-        int num = 100;
-        changeNum(num);
-
-        System.out.println(num);
     }
 
     public void loadWeights(double [] weightsArray)
@@ -197,59 +153,24 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
         return (int) Math.round(total);
     }
 
-    public void uploadEvaluation(String u_suburbData, String u_addressData, String u_bedData, String u_bathData, String u_plotAreaData, String u_houseAreaData, String u_garageData, boolean u_poolData)
+    public void uploadEvaluation(String sPrice)
     {
+        double weights[]=new double[10];
+        loadWeights(weights);
 
+        int evalAmount = evaluate(Integer.parseInt(sPrice), addressData, bedData, bathData, plotAreaData,houseAreaData,garageData,poolData, weights);
+        evalAmountTest = evalAmount;
+        sendInfo(suburbData, addressData, bedData, bathData, plotAreaData, houseAreaData, garageData, poolData, (evalAmount + ""));
     }
 
 
-    public void changeNum(int num)
+    public void fetchSuburbPrice(String suburbData)
     {
-        num=100;
-    }
-
-    public int fetchSuburbPrice(String suburbData)
-    {
-
-
-        final String c_suburbData = suburbData;
-
-        int subPric=-1;
-        StringRequest stringRequest = new StringRequest(subUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                System.out.println("This is the response");
-                System.out.println(response);
-                String subPrice="";
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray result = jsonObject.getJSONArray("result");
-
-                    //HERES THE RESPONSE HANDLER
-                    handleResponce(result, 1);
-
-                    System.out.println(result);
-                    JSONObject suburb = result.getJSONObject(0);
-                    subPrice = suburb.getString("AVG_PRICE");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                final String price = subPrice;
-                System.out.println(price);
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-        return subPric;
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("NAME", suburbData);
+        int key =1;
+        VolleyRequest volleyRequest = new VolleyRequest(subUrl, params, this, key);
+        volleyRequest.makeRequest();
     }
 
     public void doCheck(View view)
@@ -259,4 +180,59 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
     }
 
 
+    @Override
+    public void handleResponce(Object response, Map<String, String> map, int key)
+    {
+        String h_response = (String) response;
+        System.out.println("Fetch response is " +h_response);
+        System.out.println("Key is :" + key);
+        try
+        {
+
+            switch (key)
+            {
+                case 1: //the fetch suburb is called
+                    JSONObject jsonObject = new JSONObject( h_response);
+                    System.out.println("Entered case 1");
+                    JSONArray result= jsonObject.getJSONArray("SUBURB");
+                    System.out.println(result);
+                    JSONObject suburb = result.getJSONObject(0);
+                    String subPrice = suburb.getString("AVG_PRICE");
+                    System.out.println(subPrice);
+                    Toast.makeText(getApplicationContext(), "handled", Toast.LENGTH_LONG).show();
+                    suburbPri=Double.parseDouble(subPrice);
+                    uploadEvaluation(subPrice);
+                    break;
+
+                case 2:
+                    System.out.println("Entered case 2");
+                    String houseID = h_response.substring(h_response.indexOf(' '));
+                    System.out.println(houseID);
+                    Toast.makeText(getApplicationContext(), "handled", Toast.LENGTH_LONG).show();
+//
+                    displayEvaluation(houseID);
+                    break;
+            }
+        } catch (JSONException e) {
+        e.printStackTrace();
+    }
+    }
+
+
+    public void displayEvaluation(String houseID)
+    {
+        Intent startNewActivity = new Intent(this,HouseActivity.class);
+        startNewActivity.putExtra("HOUSEID", houseID);
+        startActivity(startNewActivity);
+    }
+
+    @Override
+    public void handleError(Object error, int key) {
+        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
 }
