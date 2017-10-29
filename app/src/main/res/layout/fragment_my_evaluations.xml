@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
-        android:text="Add Evaluation" />
+        android:text="Add Evaluation"
+        android:textColor="@color/white" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,6 +32,7 @@
     </ScrollView>
 
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/addEvaluationBtn"
@@ -38,5 +40,5 @@
         android:layout_marginTop="26dp"
         android:text="Past Evaluations"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:id="@+id/textView6" />
+        android:textColor="@color/white" />
 </RelativeLayout>
