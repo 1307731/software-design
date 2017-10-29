@@ -8,7 +8,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 }
 
-function createUser(){
+function insertUser(){
     //var outside function
     global $connect;
 
@@ -42,7 +42,7 @@ function createUser(){
 		$stmt->execute();
 		$numrows = $stmt->affected_rows;
 		
-		processStatement($numrows);
+		processStatementInsert($numrows);
 
         $stmt->close();
 	}
@@ -50,16 +50,16 @@ function createUser(){
     $connect->close();
 }
 
-function processStatement($numrows){
+function processStatementInsert($numrows){
         
 		if(!$numrows){
 			//fail
-			echo 0;
-			return 0;
-		}else{
-			//success
 			echo 1;
 			return 1;
+		}else{
+			//success
+			echo 0;
+			return 0;
 		}
 }
 
