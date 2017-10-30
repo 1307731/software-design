@@ -107,20 +107,19 @@ public class TestDrawerActivity {
 
 
     }
-    /*
-    @Test
-    public void onNavigationItemSelected() throws Exception{
 
-        DrawerActivity t = Robolectric.setupActivity(DrawerActivity.class);
+//    @Test
+//    public void fragments() throws Exception{
+//
+//        DrawerActivity t = Robolectric.setupActivity(DrawerActivity.class);
+//
+//        //News feed
+//
+//        NewsFeed fragment =  new NewsFeed();
+//        startFragment(fragment);
+//
+//        NewsFeed newsFeed = new NewsFeed();
+//        assertEquals(t.getFragmentManager().findFragmentById(R.id.drawerContentFrame), );
+//    }
 
-        //News feed
-        MenuItem menuItem = new RoboMenuItem(R.id.nav_newsFeed);
-        t.onNavigationItemSelected(menuItem);
-        FragmentManager fragmentManager = t.getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.drawerContentFrame);
-
-        NewsFeed newsFeed = new NewsFeed();
-        assertEquals(t.getFragmentManager().findFragmentById(R.id.drawerContentFrame), );
-    }
-    */
 }
