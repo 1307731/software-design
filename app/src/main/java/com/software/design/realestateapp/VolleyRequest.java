@@ -33,6 +33,7 @@ public class VolleyRequest {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        System.out.println("Response is: "+ response);
                         vol.handleResponce(response, map, key);
                         System.out.println("Response");
                     }
@@ -40,6 +41,7 @@ public class VolleyRequest {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error is: "+ error);
                         vol.handleError(error, key);
                     }
                 }) {
