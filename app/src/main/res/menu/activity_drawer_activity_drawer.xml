@@ -18,7 +18,12 @@
             android:layout_height="match_parent"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:icon="@android:drawable/ic_dialog_map"
-            android:title="Properties" />/>
+            android:title="Properties" />
+
+        <item
+            android:id="@+id/nav_favourites"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Favourites" />
 
     </group>
 

@@ -56,7 +56,7 @@ public class EvaluationActivity extends AppCompatActivity{
         //loads weights to be used
         //loadWeights(weightsArr);
 
-        //php url
+        //php urlCheck
 
 
     }

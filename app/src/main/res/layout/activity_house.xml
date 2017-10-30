@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView15"
         android:layout_below="@+id/textView15"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="19dp"
         android:text="Pool:"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -212,5 +212,24 @@
         android:layout_alignBaseline="@+id/txtEvalasfda"
         android:layout_alignBottom="@+id/txtEvalasfda"
         android:layout_toEndOf="@+id/textView10" />
+
+    <ToggleButton
+        android:id="@+id/favourite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txtEval"
+        android:layout_alignParentBottom="true"
+        android:text="ToggleButton" />
+
+    <TextView
+        android:id="@+id/favouriteView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/favourite_button"
+        android:layout_alignBottom="@+id/favourite_button"
+        android:layout_alignStart="@+id/txtEvalasfda"
+        android:text="Favourite:"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

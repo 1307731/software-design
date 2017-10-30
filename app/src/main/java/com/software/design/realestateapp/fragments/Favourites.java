@@ -20,7 +20,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.software.design.realestateapp.DrawerActivity;
-import com.software.design.realestateapp.EvaluationActivity;
 import com.software.design.realestateapp.HouseActivity;
 import com.software.design.realestateapp.R;
 
@@ -33,7 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyEvaluations extends Fragment implements View.OnClickListener{
+/**
+ * Created by Matthew on 2017/10/30.
+ */
+
+
+public class Favourites extends Fragment implements View.OnClickListener {
 
     List<String> addresses = new ArrayList<String>();
     List<String> suburbs = new ArrayList<String>();
@@ -48,67 +52,28 @@ public class MyEvaluations extends Fragment implements View.OnClickListener{
     String user_id;
 
     private Button mButton;
-    String url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getUserEvaluations.php";
-
+    String url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getFavourites.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_my_evaluations, container, false);
+        View v = inflater.inflate(R.layout.fragment_favourites, container, false);
         View root = v.getRootView();
-        root.setBackgroundColor(getResources().getColor(R.color.grey));
 
-        mButton = (Button) v.findViewById(R.id.refresh_button_evaluations);
-        mButton.setOnClickListener(this);
+        root.setBackgroundColor(getResources().getColor(R.color.grey));
 
         user_id = ((DrawerActivity)getActivity()).getS_user_id();
 
-        Button evalBtn = (Button) v.findViewById(R.id.addEvaluationBtn);
-        evalBtn.setOnClickListener(this);
+        mButton = (Button) v.findViewById(R.id.refresh_button_favourites);
+        mButton.setOnClickListener(this);
 
-        //Hard coded for now, will get data from database
-        /*addresses.add("5 Janet Street");
-        suburbs.add("Glenvista");
-        addresses.add("36 Basson Drive");
-        suburbs.add("Glenvista");
-        addresses.add("1 Jan Smuts Avenue");
-        suburbs.add("Braamfontein");
-        addresses.add("44 Stanley Avenue");
-        suburbs.add("Braamfontein");
-        addresses.add("45 Vorster Avenue");
-        suburbs.add("Glenvista");*/
-        /*
-        LinearLayout ll = (LinearLayout) v.findViewById(R.id.pastEvaluationLayout);
-
-        for(int i = 0; i < addresses.size(); i++) {
-            RelativeLayout rl = (RelativeLayout) getActivity().getLayoutInflater().
-                    inflate(R.layout.past_evaluations, null);
-
-            TextView t;
-            t = (TextView) rl.findViewById(R.id.idText);
-            t.setText(""+(i+1));
-
-            t = (TextView) rl.findViewById(R.id.addressText);
-            t.setText(addresses.get(i));
-
-            t = (TextView) rl.findViewById(R.id.suburbText);
-            t.setText(suburbs.get(i));
-
-            rl.setOnClickListener(this);
-            //id will match number when on list
-            rl.setId(i+1);
-            ll.addView(rl);
-        }*/
-
-
-
-        // Inflate the layout for this fragment
         return v;
     }
 
+
     public void populateList(){
 
-        LinearLayout ll = (LinearLayout) getView().findViewById(R.id.pastEvaluationLayout);
+        LinearLayout ll = (LinearLayout) getView().findViewById(R.id.favouriteEvaluationLayout);
         ll.removeAllViews();
 
         for(int i = 0; i < addresses.size(); i++) {
@@ -136,15 +101,8 @@ public class MyEvaluations extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v){
-
         switch (v.getId()){
-            case R.id.addEvaluationBtn:
-                ///Toast.makeText(getActivity(),"Button Working",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), EvaluationActivity.class);
-                intent.putExtra("USER_ID",((DrawerActivity)getActivity()).getS_user_id());
-                startActivity(intent);
-                break;
-            case R.id.refresh_button_evaluations:
+            case R.id.refresh_button_favourites:
                 Toast.makeText(getContext(), "Refreshing", Toast.LENGTH_SHORT).show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
@@ -223,10 +181,6 @@ public class MyEvaluations extends Fragment implements View.OnClickListener{
                 startNewActivity.putExtra("USER_ID", user_id);
                 startActivity(startNewActivity);
                 break;
-
         }
-
     }
-
-
 }

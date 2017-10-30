@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.software.design.realestateapp.DrawerActivity;
 import com.software.design.realestateapp.EvaluationActivity;
 import com.software.design.realestateapp.HouseActivity;
 import com.software.design.realestateapp.R;
@@ -43,6 +44,8 @@ public class NewsFeed extends Fragment implements View.OnClickListener {
     List<String> garages_num = new ArrayList<String>();
     List<String> pool = new ArrayList<String>();
     List<String> evaluation = new ArrayList<String>();
+    List<String> house_ids = new ArrayList<String>();
+    String user_id;
 
     private Button mButton;
     String url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getHouses.php";
@@ -57,6 +60,8 @@ public class NewsFeed extends Fragment implements View.OnClickListener {
 
         mButton = (Button) v.findViewById(R.id.refresh_button_news);
         mButton.setOnClickListener(this);
+
+        user_id = ((DrawerActivity)getActivity()).getS_user_id();
 
         /*LinearLayout ll = (LinearLayout) v.findViewById(R.id.newsEvaluationLayout);
 
@@ -147,6 +152,8 @@ public class NewsFeed extends Fragment implements View.OnClickListener {
                                         pool.add(temp);
                                         temp = curr.getString("EVALUATION");
                                         evaluation.add(temp);
+                                        temp = curr.getString("HOUSE_ID");
+                                        house_ids.add(temp);
                                     }
                                     //Toast.makeText(getContext(), curr.getString("ADDRESS"), Toast.LENGTH_SHORT).show();
                                 }
@@ -187,6 +194,8 @@ public class NewsFeed extends Fragment implements View.OnClickListener {
                 startNewActivity.putExtra("GARAGES_NUM", garages_num.get((int)v.getId()-1));
                 startNewActivity.putExtra("POOL", pool.get((int)v.getId()-1)+"");
                 startNewActivity.putExtra("EVALUATION_AMOUNT", evaluation.get((int)v.getId()-1));
+                startNewActivity.putExtra("HOUSE_ID", house_ids.get((int)v.getId()-1));
+                startNewActivity.putExtra("USER_ID", user_id);
                 startActivity(startNewActivity);
                 break;
 

@@ -65,7 +65,7 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         phonenumber = (EditText) findViewById(R.id.editText_PhoneNumber_signup);
         agent = (CheckBox) findViewById(R.id.checkBox_Agent_signup);
         signUp = (Button) findViewById(R.id.button_SignUpSend);
-        //php url for insert
+        //php urlCheck for insert
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertUser.php";
 
 
