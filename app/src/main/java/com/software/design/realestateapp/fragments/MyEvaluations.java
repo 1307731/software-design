@@ -48,6 +48,7 @@ public class MyEvaluations extends Fragment implements View.OnClickListener{
     private Button mButton;
     String url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getUserEvaluations.php";
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
