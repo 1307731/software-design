@@ -1,6 +1,7 @@
 package com.software.design.realestateapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -251,10 +252,15 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
             if (c_response.contains("0")) {
                 Toast.makeText(getApplicationContext(), getString(R.string.SignUp_CreatedUser_0), Toast.LENGTH_LONG).show();
                 testReciever = "0";
+                Intent nextIntent = new Intent(this, LogInActivity.class);
+                startActivity(nextIntent);
 
             } else if (c_response.contains("1")) {
                 Toast.makeText(getApplicationContext(), getString(R.string.SignUp_Failed_1), Toast.LENGTH_LONG).show();
                 testReciever = "1";
+            } else if (c_response.contains("5")) {
+                Toast.makeText(getApplicationContext(), "Please enter a unique email and username", Toast.LENGTH_LONG).show();
+                testReciever = "5";
             }
         }
     }

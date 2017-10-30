@@ -159,15 +159,19 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
         if (e_poolData) {
             poolPres = 1;
         }
-        double sPrice = e_subPrice, bed = Double.parseDouble(e_bedData), garage = Double.parseDouble(e_garageData), bath = Double.parseDouble(e_bathData), house = Double.parseDouble(e_houseAreaData), plot = Double.parseDouble(e_plotAreaData);
-        bed = bed - avgBed;
-        bath = bath - avgBath;
-        garage = garage - avgGarage;
-        house = house - avgHouse;
-        plot = plot - avgPlot;
-        total = e_subPrice * e_weights[0];
-        double totalWeight = (plot * e_weights[1]) + (house * e_weights[2]) + (bath * e_weights[3]) + (bed * e_weights[4]) + (garage * e_weights[5]) + poolPres * e_weights[6];
-        total = total + ((e_subPrice - total) * totalWeight);
+
+        double sPrice=e_subPrice, bed=Double.parseDouble(e_bedData), garage=Double.parseDouble(e_garageData), bath=Double.parseDouble(e_bathData), house =Double.parseDouble(e_houseAreaData), plot = Double.parseDouble(e_plotAreaData);
+        bed = bed / avgBed;
+        bath = bath / avgBath;
+        garage = garage / avgGarage;
+        house = house / avgHouse;
+        plot = plot / avgPlot;
+        total = e_subPrice*e_weights[0];
+        System.out.println("Current for e sub is :" + total);
+        System.out.println("Sub price " + e_subPrice);
+        double totalWeight = (plot*e_weights[1])+(house*e_weights[2])+(bath*e_weights[3])+(bed*e_weights[4])+(garage*e_weights[5])+poolPres*e_weights[6];
+        total=total+ ((e_subPrice-total)*totalWeight);
+      
         //double normalized=e_subPrice*e_weights[0]+1000*e_weights[1]+700*e_weights[2]+1*e_weights[3]+1*e_weights[4]+1*e_weights[5]+1*e_weights[6];
         // total=total/normalized;
         //total=total*e_subPrice+400000;
