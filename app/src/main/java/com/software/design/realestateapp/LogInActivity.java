@@ -82,13 +82,12 @@ public class LogInActivity extends AppCompatActivity implements VolleyResponce {
             String c_response = (String) response;
             String[] _response = c_response.split(" ");
             String s_user_id = _response[1];
-            int use_id = Integer.parseInt(s_user_id);
             String user_email = _response[2];
             String user_name = _response[3];
             String usernameData = map.get("USERNAME");
-            testReciever = c_response;
+            testReciever = _response[0];
 
-            if (_response[0].equals(0)) {
+            if (_response[0].equals("0")) {
                 Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
                 intent.putExtra("Username", usernameData);
                 startActivity(intent);
