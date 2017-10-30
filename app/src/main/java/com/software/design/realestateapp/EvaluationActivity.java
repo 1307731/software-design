@@ -9,13 +9,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -166,12 +159,14 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
             poolPres=1;
         }
         double sPrice=e_subPrice, bed=Double.parseDouble(e_bedData), garage=Double.parseDouble(e_garageData), bath=Double.parseDouble(e_bathData), house =Double.parseDouble(e_houseAreaData), plot = Double.parseDouble(e_plotAreaData);
-        bed=bed-avgBed;
-        bath=bath-avgBath;
-        garage=garage-avgGarage;
-        house=house-avgHouse;
-        plot=plot-avgPlot;
+        bed = bed / avgBed;
+        bath = bath / avgBath;
+        garage = garage / avgGarage;
+        house = house / avgHouse;
+        plot = plot / avgPlot;
         total = e_subPrice*e_weights[0];
+        System.out.println("Current for e sub is :" + total);
+        System.out.println("Sub price " + e_subPrice);
         double totalWeight = (plot*e_weights[1])+(house*e_weights[2])+(bath*e_weights[3])+(bed*e_weights[4])+(garage*e_weights[5])+poolPres*e_weights[6];
         total=total+ ((e_subPrice-total)*totalWeight);
         //double normalized=e_subPrice*e_weights[0]+1000*e_weights[1]+700*e_weights[2]+1*e_weights[3]+1*e_weights[4]+1*e_weights[5]+1*e_weights[6];
