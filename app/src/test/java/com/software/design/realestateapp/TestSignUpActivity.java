@@ -3,7 +3,6 @@ package com.software.design.realestateapp;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,9 +72,6 @@ public class TestSignUpActivity {
 
         SignUpActivity t = Robolectric.setupActivity(SignUpActivity.class);
 
-
-        TextView resultTextView = (TextView) t.findViewById(R.id.textView_signUp_result);
-
         EditText name = (EditText) t.findViewById(R.id.editText_Name_signup);
         EditText surname = (EditText) t.findViewById(R.id.editText_Surname_signup);
         EditText password = (EditText) t.findViewById(R.id.editText_Password_signup);
@@ -98,7 +94,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "0");
+        assertEquals(t.testReciever, "0");
 
 
         //Passwords do not match
@@ -113,7 +109,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "3");
+        assertEquals(t.testReciever, "3");
 
         //Missing field
         username.setText(TEST_VALID_USERNAME);
@@ -127,7 +123,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
         //Invalid Email
         username.setText(TEST_VALID_USERNAME);
@@ -141,7 +137,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
         //Invalid name
         username.setText(TEST_VALID_USERNAME);
@@ -155,7 +151,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
         //Invalid surname
         username.setText(TEST_VALID_USERNAME);
@@ -169,7 +165,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
         //Invalid Username
         username.setText(TEST_INVALID_USERNAME);
@@ -183,7 +179,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
         //Invalid phonenumber
         username.setText(TEST_VALID_USERNAME);
@@ -197,7 +193,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
         //Invalid Password
         username.setText(TEST_VALID_USERNAME);
@@ -211,7 +207,7 @@ public class TestSignUpActivity {
 
         t.signUpUserTestable(true);
 
-        assertEquals(resultTextView.getText().toString(), "1");
+        assertEquals(t.testReciever, "1");
 
     }
 

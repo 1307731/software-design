@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -22,7 +21,6 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
     EditText name, surname, password, confirmPassword, username, email, phonenumber;
     CheckBox agent;
     String url;
-    TextView resultTextView;
 
     String testReciever;
 
@@ -70,7 +68,6 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         //php url for insert
         url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/insertUser.php";
 
-        resultTextView = (TextView) findViewById(R.id.textView_signUp_result);
 
         testReciever = new String();
     }
@@ -119,8 +116,8 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         //check if all fields are complete
         if (checkCompletedFields(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData) != 0) {
             valid = false;
-            resultTextView.setText("4");
-            System.err.println("completed fields");
+            testReciever = "4";
+            
             Toast.makeText(getApplicationContext(), getString(R.string.SignUp_FieldsIncomplete_4), Toast.LENGTH_LONG).show();
         }
 
@@ -129,8 +126,8 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         if (!passwordData.equals(confirmPasswordData)) {
             //Passwords do not match
             valid = false;
-            resultTextView.setText("3");
-            System.err.println("pass - confirm");
+            testReciever = "3";
+            
             Toast.makeText(getApplicationContext(), getString(R.string.SignUp_PasswordNoMatch_3), Toast.LENGTH_LONG).show();
         }
 
@@ -138,16 +135,16 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         if (!emailData.contains("@")) {
             //checks if email has a @ symbol
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("contains @");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Email is invalid", Toast.LENGTH_LONG).show();
         }
 
         if (usernameData.contains("*")) {
             //checks if username has a * symbol
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("contains *");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Username is invalid", Toast.LENGTH_LONG).show();
         }
 
@@ -155,37 +152,37 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
         if (!checkNumber(phonenumberData)) {
             //checks if phone has only digits
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("phonenumber");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_LONG).show();
         }
 
         if (passwordData.length() <= 3) {
             //checks if phone has only digits
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("passLength");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Password too short", Toast.LENGTH_LONG).show();
         }
 
         if (!checkName(nameData)) {
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("name");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Please make sure there are no numbers in the name", Toast.LENGTH_LONG).show();
         }
 
         if (!checkName(surnameData)) {
             valid = false;
-            resultTextView.setText("1");
-            System.err.println("surname");
+            testReciever = "1";
+            
             Toast.makeText(getApplicationContext(), "Please make sure there are no numbers in the name", Toast.LENGTH_LONG).show();
         }
 
         //creates user if valid
         if (valid) {
 
-            resultTextView.setText("0");
+            testReciever = "0";
             Toast.makeText(getApplicationContext(), "Adding user now", Toast.LENGTH_LONG).show();
             if (!isTest) {
                 createUser(usernameData, passwordData, nameData, surnameData, confirmPasswordData, phonenumberData, emailData, agentData, isTest);
@@ -247,7 +244,7 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
     public void handleResponce(Object response, Map<String, String> map, int key) {
         if (key == 1) {
             String c_response = (String) response;
-            resultTextView.setText(c_response);
+            testReciever = c_response;
 
 
             //Success
@@ -265,7 +262,7 @@ public class SignUpActivity extends AppCompatActivity implements VolleyResponce 
     @Override
     public void handleError(Object error, int key) {
         if (key == 1) {
-            resultTextView.setText("2");
+            testReciever = "2";
             Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
             testReciever = "2";
         }
