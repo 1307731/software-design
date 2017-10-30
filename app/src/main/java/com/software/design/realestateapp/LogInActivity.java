@@ -16,7 +16,6 @@ import java.util.Map;
 
 //we now implement the VolleyResponce interface
 public class LogInActivity extends AppCompatActivity implements VolleyResponce {
-
     //initialize variables
     Button signUp;
     Button login;
@@ -82,16 +81,17 @@ public class LogInActivity extends AppCompatActivity implements VolleyResponce {
         if (key == 1) {
             String c_response = (String) response;
             String[] _response = c_response.split(" ");
+            System.out.println(_response[0]);
+            String code = _response[0];
             String s_user_id = _response[1];
             String user_email = _response[2];
             String user_name = _response[3];
             String usernameData = map.get("USERNAME");
-            testReciever = c_response;
+            testReciever = _response[0];
 
-            if (!_response[0].equals(0)) {
+            if (code.contains("0")) {
                 Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
                 intent.putExtra("Username", usernameData);
-                intent.putExtra("USER_ID",s_user_id);
                 startActivity(intent);
 
                 finish();
