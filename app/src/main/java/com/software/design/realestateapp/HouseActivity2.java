@@ -84,10 +84,10 @@ public class HouseActivity2 extends AppCompatActivity implements VolleyResponce{
             String numBath = house.getString("NUM_BATHROOMS");
             String numBed= house.getString("NUM_BEDROOMS");
             String plotArea= house.getString("PLOT_AREA");
-            String numGarage= house.getString("AVG_PRICE");
+            String numGarage= house.getString("NUM_GARAGES");
             String pool = house.getString("POOL");
             String houseArea=house.getString("HOUSE_AREA");
-            String evaluationAmo=house.getString("AVG_PRICE");
+            String evaluationAmo=house.getString("EVALUATION");
             Toast.makeText(getApplicationContext(), "handled", Toast.LENGTH_LONG).show();
             setTextViews(address, suburb,  plotArea, houseArea,  numBed, numBath, numGarage, pool,  evaluationAmo);
         } catch (JSONException e) {
