@@ -25,6 +25,7 @@ public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     String userName;
+    String userEmail;
     String s_user_id;
 
     String testReciever;
@@ -58,6 +59,7 @@ public class DrawerActivity extends AppCompatActivity
         /////////////Start of my code, that above is auto generated
 
         userName = getIntent().getStringExtra("Username");
+        userEmail = getIntent().getStringExtra("Email");
         //System.out.println("Username" + userName);
         //Toast.makeText(getApplicationContext(),"Username: " + userName, Toast.LENGTH_LONG).show();
 
@@ -73,7 +75,11 @@ public class DrawerActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
         TextView drawerUsername = (TextView)header.findViewById(R.id.drawerUsername);
+        // TextView drawerEmail = (TextView) header.findViewById(R.id.drawerEmail);
         drawerUsername.setText(userName);
+        // drawerEmail.setText(userEmail);
+
+        //(R.layout.nav_header_drawer_activity)
 
         testReciever = new String();
 
