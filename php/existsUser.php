@@ -12,34 +12,33 @@ function createUser(){
         //var outside function
         global $connect;
 
-       // $stmt = $connect->prepare("SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ?");
-       // $stmt->bind_param("ss",$USERNAME,$PASSWORD);
         $USERNAME = $_POST["USERNAME"];
         $PASSWORD = $_POST["PASSWORD"];
-       // $stmt->execute();
 
-       // $numrows = $stmt->affected_rows;
-       // if(!$numrows){
-      //          echo "1";
-       // }else{
-       //         echo "0";
-       // }
-
-       $query = "SELECT count(*) AS NUMRESULT FROM USERS WHERE USERNAME = '$USERNAME' AND PASSWORD = '$PASSWORD'";
+       $query = createQuerySearch($USERNAME, $PASSWORD);
 
        $result = mysqli_query($connect, $query);
-       if($result->fetch_object()->NUMRESULT == 1){
-       		//success
-       		echo 0;
-       }else{
-       		//failure
-       		echo 1;
-       }
-		//echo ($result->fetch_object()->NUMRESULT);
-        mysqli_close($connect);
-	
-       // $stmt->close();
-        //$connect->close();
+       processStatementExists($result->fetch_object()->NUMRESULT);
+       mysqli_close($connect);
+
+}
+
+function createQuerySearch($USERNAME, $PASSWORD){
+	//print_r($connect);
+	$query1 = "SELECT count(*) AS NUMRESULT FROM USERS WHERE USERNAME = '$USERNAME' AND PASSWORD = '$PASSWORD'";
+	return $query1;
+}
+
+function processStatementExists($numrows){
+		if($numrows){
+			//SUCCESS
+			echo 0;
+			return 0;
+		}else{
+			//success
+			echo 1;
+			return 1;
+		}
 }
 
 ?>
