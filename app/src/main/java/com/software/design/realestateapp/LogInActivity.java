@@ -92,6 +92,7 @@ public class LogInActivity extends AppCompatActivity implements VolleyResponce {
             if (code.contains("0")) {
                 Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
                 intent.putExtra("Username", usernameData);
+                intent.putExtra("USER_ID",s_user_id);
                 startActivity(intent);
 
                 finish();
