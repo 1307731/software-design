@@ -28,6 +28,7 @@ public class EvaluationActivity extends AppCompatActivity{
 
     EditText address, suburb, plotArea, houseArea, numBath, numBed, numGarage;
     int evalAmountTest;
+    String s_user_id;
 
 
     boolean checked =false;
@@ -39,6 +40,8 @@ public class EvaluationActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluation);
+
+        s_user_id = getIntent().getStringExtra("USER_ID");
 
         //assign screen element variables to fields
         address = (EditText) findViewById(R.id.edAddress);
@@ -96,6 +99,7 @@ public class EvaluationActivity extends AppCompatActivity{
                 params.put("GARAGES_NUM", garageData);
                 params.put("POOL", poolData+"");
                 params.put("EVALUATION_AMOUNT", evaluationData);
+                params.put("USER_ID",s_user_id);
                 return params;
             }
 
