@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.software.design.realestateapp.DrawerActivity;
 import com.software.design.realestateapp.EvaluationActivity;
 import com.software.design.realestateapp.HouseActivity;
 import com.software.design.realestateapp.R;
@@ -45,7 +46,7 @@ public class MyEvaluations extends Fragment implements View.OnClickListener{
     List<String> evaluation = new ArrayList<String>();
 
     private Button mButton;
-    String url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getHouses.php";
+    String url = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getUserEvaluations.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -135,6 +136,7 @@ public class MyEvaluations extends Fragment implements View.OnClickListener{
             case R.id.addEvaluationBtn:
                 ///Toast.makeText(getActivity(),"Button Working",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), EvaluationActivity.class);
+                intent.putExtra("USER_ID",((DrawerActivity)getActivity()).getS_user_id());
                 startActivity(intent);
                 break;
             case R.id.refresh_button_evaluations:
@@ -188,6 +190,7 @@ public class MyEvaluations extends Fragment implements View.OnClickListener{
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
+                        params.put("USER_ID",((DrawerActivity)getActivity()).getS_user_id());
                         return params;
                     }
                 };
