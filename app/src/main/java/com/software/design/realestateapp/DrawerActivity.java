@@ -28,6 +28,7 @@ public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     String userName;
+    String s_user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class DrawerActivity extends AppCompatActivity
         System.out.println("Username" + userName);
         Toast.makeText(getApplicationContext(),"Username: " + userName, Toast.LENGTH_LONG).show();
 
+        s_user_id = getIntent().getStringExtra("USER_ID");
+
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -74,6 +77,10 @@ public class DrawerActivity extends AppCompatActivity
         drawerUsername.setText(userName);
 
 
+    }
+
+    public String getS_user_id(){
+        return s_user_id;
     }
 
     @Override
