@@ -1,21 +1,11 @@
 package com.software.design.realestateapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class HouseActivity extends AppCompatActivity implements VolleyResponce{
-    String fetchHouseURL = "http://lamp.ms.wits.ac.za/~s1037363/realestate_app/getHouseDetails.php";
+public class HouseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,22 +13,16 @@ public class HouseActivity extends AppCompatActivity implements VolleyResponce{
         setContentView(R.layout.activity_house);
 
         Intent prevInt = getIntent();
-        String houseID = prevInt.getStringExtra("HOUSEID");
-        System.out.println("House ID is :" +houseID);
+        String address = prevInt.getStringExtra("ADDRESS");
+        String suburb = prevInt.getStringExtra("SUBURB");
+        String numBath = prevInt.getStringExtra("BATHROOMS_NUM");
+        String numBed = prevInt.getStringExtra("BEDROOMS_NUM");
+        String numGarage = prevInt.getStringExtra("GARAGES_NUM");
+        String plotArea = prevInt.getStringExtra("PLOT_AREA");
+        String pool = prevInt.getStringExtra("POOL");
+        String houseArea = prevInt.getStringExtra("HOUSE_AREA");
+        String evaluationAmo = prevInt.getStringExtra("EVALUATION_AMOUNT");
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("HOUSE_ID", houseID);
-
-        Toast.makeText(getApplicationContext(), "Loading houses", Toast.LENGTH_LONG).show();
-
-        int key =1;
-        VolleyRequest volleyRequest = new VolleyRequest(fetchHouseURL, params, this, key);
-        volleyRequest.makeRequest();
-
-    }
-
-    public void setTextViews(String address, String suburb,  String plotArea, String houseArea,  String numBed, String numBath, String numGarage, String pool,  String evaluationAmo)
-    {
         ((TextView) findViewById(R.id.txtSubName)).setText(suburb);
         ((TextView) findViewById(R.id.txtPlotSize)).setText(plotArea);
         ((TextView) findViewById(R.id.txtNumBath)).setText(numBath);
@@ -48,42 +32,6 @@ public class HouseActivity extends AppCompatActivity implements VolleyResponce{
         ((TextView) findViewById(R.id.txtNumGar)).setText(numGarage);
         ((TextView) findViewById(R.id.txtHouseSize)).setText(houseArea);
         ((TextView) findViewById(R.id.txtEval)).setText(evaluationAmo);
-    }
 
-    @Override
-    public void handleResponce(Object response, Map<String, String> map, int key)
-    {
-        try {
-            String h_response = (String) response;
-            System.out.println("Response is: " + h_response);
-            JSONObject jsonObject = new JSONObject( h_response);
-            JSONArray result= jsonObject.getJSONArray("SUBURB");
-            System.out.println(result);
-            JSONObject house = result.getJSONObject(0);
-
-            String address = house.getString("ADDRESS");
-            String suburb = house.getString("SUBURB");
-            String numBath = house.getString("NUM_BATHROOMS");
-            String numBed= house.getString("NUM_BEDROOMS");
-            String plotArea= house.getString("PLOT_AREA");
-            String numGarage= house.getString("AVG_PRICE");
-            String pool = house.getString("POOL");
-            String houseArea=house.getString("HOUSE_AREA");
-            String evaluationAmo=house.getString("AVG_PRICE");
-            Toast.makeText(getApplicationContext(), "handled", Toast.LENGTH_LONG).show();
-            setTextViews(address, suburb,  plotArea, houseArea,  numBed, numBath, numGarage, pool,  evaluationAmo);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void handleError(Object error, int key) {
-        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public Context getContext() {
-        return this;
     }
 }

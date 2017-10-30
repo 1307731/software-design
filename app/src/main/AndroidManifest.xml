@@ -14,10 +14,9 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"/>
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -26,14 +25,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-
-        
-        <activity
-            android:name=".LogInActivity" />
-
-        <activity
-            android:name=".SignUpActivity" />
-
+        <activity android:name=".LogInActivity" />
+        <activity android:name=".SignUpActivity" />
         <activity
             android:name=".WelcomeScreen"
             android:theme="@style/SplashTheme">
@@ -43,25 +36,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer_activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RoomActivity" />
+        <activity android:name=".EvaluationActivity" />
 
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity
-            android:name=".RoomActivity"/>
-
-        <activity
-            android:name=".EvaluationActivity"/>
-
-        <!--Specifying the api key for the map view in the map fragment-->
+        <!-- Specifying the api key for the map view in the map fragment -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAs_r59ydSYO1zpH0NNadXXOBnO-b5GH0w" />
 
-        <activity android:name=".HouseActivity"></activity>
+        <activity android:name=".HouseActivity" />
+        <activity android:name=".FavouriteActivity"></activity>
     </application>
 
 </manifest>
