@@ -108,8 +108,8 @@ public class TestLogInActivity  {
         params.put("USERNAME", TEST_VALID_USERNAME);
         params.put("PASSWORD", TEST_VALID_PASSWORD);
 
-        String response1 = "0";
-        String response2 = "1";
+        String response1 = "0 10 moo moo";
+        String response2 = "1 10 moo moo";
 
 
         t.handleResponce(response2, params, 1);

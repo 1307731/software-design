@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class HouseActivityTest {
+public class TestHouseActivity {
 
     @Test
     public void onCreate() throws Exception {
