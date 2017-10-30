@@ -55,6 +55,7 @@ public class HouseActivity extends AppCompatActivity implements VolleyResponce{
     {
         try {
             String h_response = (String) response;
+            System.out.println("Response is: " + h_response);
             JSONObject jsonObject = new JSONObject( h_response);
             JSONArray result= jsonObject.getJSONArray("SUBURB");
             System.out.println(result);

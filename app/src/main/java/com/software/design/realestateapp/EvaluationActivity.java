@@ -184,6 +184,8 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
     public void handleResponce(Object response, Map<String, String> map, int key)
     {
         String h_response = (String) response;
+        String [] array = h_response.split(" ");
+        System.out.println("Array contains :" + array[0]+" and " + array[1]);
         System.out.println("Fetch response is " +h_response);
         System.out.println("Key is :" + key);
         try
@@ -206,8 +208,9 @@ public class EvaluationActivity extends AppCompatActivity implements VolleyRespo
 
                 case 2:
                     System.out.println("Entered case 2");
-                    String houseID = h_response.substring(h_response.indexOf(' '));
-                    System.out.println(houseID);
+                    System.out.println("Fetch response is " +h_response);
+                    String houseID = h_response.substring(2,h_response.length());
+                    System.out.println("House ID is: "+houseID);
                     Toast.makeText(getApplicationContext(), "handled", Toast.LENGTH_LONG).show();
 //
                     displayEvaluation(houseID);
